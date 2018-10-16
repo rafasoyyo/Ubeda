@@ -136,7 +136,7 @@ block scripts
 
     script.
 
-        var map;
+        var map, geolocation;
         var placeService, placeMarker, placesInfo = {};
         var $placeInfo;
 
@@ -310,7 +310,12 @@ block scripts
 
 
         function gps(){
-            navigator.geolocation.getCurrentPosition(function(position){
+            alert('gps')
+            if(geolocation) {
+                navigator.geolocation.clearWatch(geolocation);
+            }
+            geolocation = navigator.geolocation.watchPosition(function(position){
+                alert('position');
 
                 var myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 map.setCenter(myPos);
@@ -338,14 +343,16 @@ block scripts
                     'center': myPos,
                 });
 
-                setInterval(function(){
-                    navigator.geolocation.getCurrentPosition(function(position){
-                        myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                        accuracy.setCenter(myPos);
-                        myMarker.setPosition(myPos);
-                    });
-                }, 3000)
-            });
+                //- setInterval(function(){
+                //-     navigator.geolocation.getCurrentPosition(function(position){
+                //-         myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                //-         accuracy.setCenter(myPos);
+                //-         myMarker.setPosition(myPos);
+                //-     });
+                //- }, 3000)
+            }, function(err){
+                alert(String(err));
+            }, { timeout: 30000 });
         }
 
         $('document').ready(function(){
