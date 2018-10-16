@@ -3,7 +3,7 @@ extends layout
 block head
     style.
         #welcome {
-            background-image: url('../images/background2.jpg');
+            background-image: url('../images/finguers.jpg');
             background-position: top right;
         }
 
@@ -59,7 +59,7 @@ block head
 
 block content
 
-    #welcome.page.background(style="background-image: url('../images/background2.jpg');")
+    #welcome.page.background
         .container
             h1.unmar María y Rafael
             p.unmar Welcome to our wedding
@@ -74,13 +74,13 @@ block content
                 .link
                     span Ver más
 
-        a.card-box(href="/sitios/eldean")
-            .card-text
-                .text
-                    p El Caserío del Dean
-                .link
-                    span Ver más
-            .card-image.background(style="background-image: url('../images/eldean.jpg');")
+        //- a.card-box(href="/sitios/eldean")
+        //-     .card-text
+        //-         .text
+        //-             p El Caserío del Dean
+        //-         .link
+        //-             span Ver más
+        //-     .card-image.background(style="background-image: url('../images/eldean.jpg');")
 
         a.card-box(href="/sitios/turisteo")
             .card-image.background(style="background-image: url('../images/turisteo.jpeg');")

@@ -1,32 +1,119 @@
 {
+    "laiglesia": {
+        "title": "El Salvador",
+        "places": [
+            {
+                "identifier": "Iglesia del Salvador",
+                "name": "Iglesia del Salvador",
+                "tipo": "Iglesia"
+            }
+        ]
+    },
     "padormir": {
         "title": "Alojamientos",
         "places": [
             {
-              "identifier": "El Parador de Úbeda",
-              "name": "El Parador de Úbeda",
-              "tipo": "Hotel"
+                "identifier": "Hotel Palacio de Úbeda",
+                "name": "Palacio de Úbeda",
+                "tipo": "Hotel"
             },
             {
-              "identifier": "Hotel Rosaleda don Pedro Úbeda",
-              "name": "Rey Don Pedro",
-              "tipo": "Hotel"
+                "identifier": "El Parador de Úbeda",
+                "name": "El Parador de Turismo",
+                "tipo": "Hotel"
             },
             {
-              "identifier": "Hotel Las casas del Consul",
-              "name": "Las casas del Consul",
-              "tipo": "Hotel"
+                "identifier": "Hotel Real Ciudad de Úbeda",
+                "name": "RL Ciudad de Úbeda",
+                "tipo": "Hotel"
             },
             {
-              "identifier": "Apartamentos Sol de Mayo",
-              "name": "Sol de Mayo",
-              "tipo": "Apartamentos"
+                "identifier": "Hotel Alvar Fañez",
+                "name": "Alvar Fañez",
+                "tipo": "Hotel"
             },
             {
-              "identifier": "Apartamentos El Losal",
-              "name": "El Losal",
-              "tipo": "Apartamentos"
+                "identifier": "Hotel El Postigo",
+                "name": "El Postigo",
+                "tipo": "Hotel",
+                "info": "Lugar reservado por completo. Recomendado para grupos."
+            },
+            {
+                "identifier": "Hotel María de Molina",
+                "name": "María de Molina",
+                "tipo": "Hotel"
+            },
+            {
+                "identifier": "Hotel Nueve Leyendas",
+                "name": "Nueve Leyendas",
+                "tipo": "Hotel"
+            },
+            {
+                "identifier": "Hotel Rosaleda de Don Pedro",
+                "name": "Rosaleda de Don Pedro",
+                "tipo": "Hotel"
+            },
+            {
+                "identifier": "Hotel Afán de Rivera",
+                "name": "Afán de Rivera",
+                "tipo": "Hotel"
+            },
+            {
+                "identifier": "Hotel La Paz Úbeda",
+                "name": "La Paz",
+                "tipo": "Hotel"
+            },
+            {
+                "identifier": "Hotel Palacio De La Rambla",
+                "name": "El Palacio de la Rambla",
+                "tipo": "Hotel"
+            },
+            {
+                "identifier": "Hotel Ordoñez Sandoval",
+                "name": "Ordoñez Sandoval",
+                "tipo": "Hotel"
+            },
+            {
+                "identifier": "Hotel Álvaro de Torres",
+                "name": "Álvaro de Torres",
+                "tipo": "Hotel"
+            },
+
+            {
+                "identifier": "Apartamentos Sol de Mayo",
+                "name": "Sol de Mayo",
+                "tipo": "Apartamentos"
+            },
+            {
+                "identifier": "Apartamentos El Losal",
+                "name": "El Losal",
+                "tipo": "Apartamentos"
             }
-          ]
+        ]
+    },
+    "turisteo": {
+        "title": "Turismo",
+        "places": [
+            {
+                "identifier": "Sacra Capilla del Salvador",
+                "name": "Capilla del Salvador",
+                "tipo": "Capilla"
+            },
+            {
+                "identifier": "Palacio Del Dean Ortega, Ubeda, Jaen",
+                "name": "Palacio del Dean Ortega",
+                "tipo": "Palacio"
+            },
+            {
+                "identifier": "Palacio Vázquez de Molina, Ubeda, Jaen",
+                "name": "Palacio Vázquez de Molina",
+                "tipo": "Palacio"
+            },
+            {
+                "identifier": "Santa María de los Reales Alcázares",
+                "name": "Reales Alcázares",
+                "tipo": "Alcázares"
+            }
+        ]
     }
 }
