@@ -1,0 +1,32 @@
+{
+    "padormir": {
+        "title": "Alojamientos",
+        "places": [
+            {
+              "identifier": "El Parador de Úbeda",
+              "name": "El Parador de Úbeda",
+              "tipo": "Hotel"
+            },
+            {
+              "identifier": "Hotel Rosaleda don Pedro Úbeda",
+              "name": "Rey Don Pedro",
+              "tipo": "Hotel"
+            },
+            {
+              "identifier": "Hotel Las casas del Consul",
+              "name": "Las casas del Consul",
+              "tipo": "Hotel"
+            },
+            {
+              "identifier": "Apartamentos Sol de Mayo",
+              "name": "Sol de Mayo",
+              "tipo": "Apartamentos"
+            },
+            {
+              "identifier": "Apartamentos El Losal",
+              "name": "El Losal",
+              "tipo": "Apartamentos"
+            }
+          ]
+    }
+}

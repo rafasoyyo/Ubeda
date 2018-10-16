@@ -1,0 +1,208 @@
+extends layout
+
+block head
+    style.
+        #map {
+            width: 100%;
+            height: calc(100vh - 250px);
+        }
+
+        #places {
+            padding: 10px;
+            height: 185px;
+            width: 100vw;
+            overflow: scroll;
+        }
+
+        #places .scroll {
+            height: inherit;
+        }
+
+        .place {
+            margin-right: 10px;
+            width: 60vw;
+            height: 100%;
+            display: inline-block;
+            box-shadow: 1px 1px 5px -1px black;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .place-box{
+            height: 30%;
+        }
+
+        .place-background {
+            height: 70%;
+            margin: -5px  -5px 5px -5px;
+        }
+
+block content
+    header#header
+        a(href="/")
+            i.fas.fa-chevron-left(style="position: absolute; top: 0; left: 0; margin: 15px")
+        h1.unmar= title
+        i.fas.fa-map-marker-alt(style="position: absolute; top: 0; right: 0; margin: 15px" onclick="gps()")
+
+    main
+        #map
+        #places
+            .scroll
+                for place in places
+                    .place(data-lat="#{place.lat}" data-lng="#{place.lng}" data-identifier="#{place.identifier}")
+                        .place-background.background
+                        .place-box
+                            h3.unmar.bold= place.name
+                            em.unmar= place.tipo
+                            span(style="padding: 5px") ·
+                            em.rating
+
+block scripts
+    script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOUok9C5sAw7TY0Uvba7Bn63YoTJjt0CU&libraries=places&callback=initMap" async defer)
+    //- script(src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer)
+
+    script.
+
+        var map, placeService;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: new google.maps.LatLng( 38.0114236, -3.3712457),
+                disableDefaultUI: true,
+                zoom: 16,
+                mapTypeControlOptions: {
+                    mapTypeIds: ['styled_map']
+                }
+            });
+
+            //Associate the styled map with the MapTypeId and set it to display.
+            map.mapTypes.set('styled_map', new google.maps.StyledMapType([
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text",
+                    "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                    ]
+                },
+                {
+                    "featureType": "poi.business",
+                    "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels.icon",
+                    "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                    ]
+                }
+            ]));
+            map.setMapTypeId('styled_map');
+
+            placeService = new google.maps.places.PlacesService(map);
+
+            $('.place').each(function(){
+                var that = $(this);
+                var data = that.data();
+                placeService.textSearch({ query: data.identifier }, function(results, status) {
+                    //- console.log(results[0])
+                    var res = results[0];
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        var url = res.photos[0].getUrl();
+                        that.children('.place-background').css({ 'background-image': 'url(' + url + ')' });
+                        that.find('.rating').text(res.rating);
+
+                        var marker = new google.maps.Marker({
+                            'icon': {
+                                'url': res.icon,
+                                'scaledSize': new google.maps.Size(25, 25),
+                            },
+                            'position': {
+                                lat: res.geometry.location.lat(),
+                                lng: res.geometry.location.lng()
+                            },
+                            'map': map
+                        });
+
+                    }
+                });
+            });
+        }
+
+        function gps(){
+            navigator.geolocation.getCurrentPosition(function(position){
+
+                var myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                map.setCenter(myPos);
+
+                var myMarker = new google.maps.Marker({
+                    'icon': {
+                        'path': google.maps.SymbolPath.CIRCLE,
+                        'fillColor': '#4285F4',
+                        'fillOpacity': 1,
+                        'scale': 6,
+                        'strokeColor': 'white',
+                        'strokeWeight': 2,
+                    },
+                    'position': myPos,
+                    'map': map
+                });
+
+                var accuracy = new google.maps.Circle({
+                    'strokeColor': '#4285F4',
+                    'strokeWeight': 2,
+                    'fillColor': '#4285F4',
+                    'fillOpacity': 0.3,
+                    'map': map,
+                    'radius': position.coords.accuracy,
+                    'center': myPos,
+                });
+
+                setInterval(function(){
+                    navigator.geolocation.getCurrentPosition(function(position){
+                        myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        accuracy.setCenter(myPos);
+                        myMarker.setPosition(myPos);
+                    });
+                }, 3000)
+            });
+        }
+
+        $('document').ready(function(){
+            //- alert('ready')
+            var w60 = $(window).width() * 0.6;
+            var places = $('.place').length;
+            $('#places .scroll').width( (places * (w60 + 10)) + 20 );
+
+            $('.place').click(function(){
+                var data = $(this).data();
+                console.log(data)
+
+                placeService.textSearch({ query: data.identifier }, function(results, status) {
+                    //- console.log(results, status)
+                    //- console.log(results[0].photos[0].getUrl())
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        var res = results[0];
+                        map.setCenter({
+                            lat: res.geometry.location.lat(),
+                            lng: res.geometry.location.lng()
+                        });
+                    }
+                });
+            });
+        });
+

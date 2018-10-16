@@ -1,0 +1,118 @@
+extends layout
+
+block head
+    style.
+        #welcome {
+            background-image: url('../images/background2.jpg');
+            background-position: top right;
+        }
+
+        #places {
+
+        }
+
+        #places .card-box {
+            width: 96%;
+            box-sizing: border-box;
+            display: inline-block;
+            margin: 2%;
+            box-shadow: 1px 1px 5px -1px black;
+        }
+
+        #places .card-box:active,
+        #places .card-box:focus {
+            box-shadow: 0px 0px 1px 0px black;
+        }
+
+        #places .card-image, .card-text {
+            width: 50%;
+            height: 150px;
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+        }
+
+        #places .card-text .text {
+            padding: 0 6%;
+        }
+
+        #places .card-text .text p {
+            padding: 0 6%;
+            color: #808080;
+        }
+
+        #places .card-text .link {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            height: 20px;
+        }
+
+        #places .card-text .link span {
+            border: 1px;
+            padding: 5px 15px;
+            color: white;
+            background-color: #607D8B;
+            font-size: 13px;
+        }
+
+block content
+
+    #welcome.page.background(style="background-image: url('../images/background2.jpg');")
+        .container
+            h1.unmar María y Rafael
+            p.unmar Welcome to our wedding
+
+
+    #places.page
+        a.card-box(href="/sitios/laiglesia")
+            .card-image.background(style="background-image: url('../images/elsalvador.jpg');")
+            .card-text
+                .text
+                    p La Iglesia del Salvador
+                .link
+                    span Ver más
+
+        a.card-box(href="/sitios/eldean")
+            .card-text
+                .text
+                    p El Caserío del Dean
+                .link
+                    span Ver más
+            .card-image.background(style="background-image: url('../images/eldean.jpg');")
+
+        a.card-box(href="/sitios/turisteo")
+            .card-image.background(style="background-image: url('../images/turisteo.jpeg');")
+            .card-text
+                .text
+                    p Monumentos y actividades Turísticas
+                .link
+                    span Ver más
+
+        a.card-box(href="/sitios/padormir")
+            .card-text
+                .text
+                    p Hospedajes
+                .link
+                    span Ver más
+            .card-image.background(style="background-image: url('../images/consul.jpg');")
+
+        a.card-box(href="/sitios/detapas")
+            .card-image.background(style="background-image: url('../images/canatapa.jpg');")
+            .card-text
+                .text
+                    p De tapas
+                .link
+                    span Ver más
+
+        //- .card-box
+        //-     .card-text
+        //-         .text
+        //-             p Viaje de Novios
+        //-         .link
+        //-             a Ver más
+        //-     .card-image.background(style="background-image: url('../images/madagascar.jpg');")
+
+    footer#footer
+
