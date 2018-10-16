@@ -136,7 +136,7 @@ block scripts
 
     script.
 
-        var map, geolocation, isLocated;
+        var map, geolocation, isLocated, myMarker, myAccuracy;
         var placeService, placeMarker, placesInfo = {};
         var $placeInfo;
 
@@ -310,17 +310,17 @@ block scripts
 
 
         function gps(){
-
             if(geolocation) {
                 navigator.geolocation.clearWatch(geolocation);
+                myMarker.setMap(null);
+                myAccuracy.setMap(null);
+                isLocated = false;
             }
             geolocation = navigator.geolocation.watchPosition(function(position){
-
                 var myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
                 if (!isLocated) {
                     map.panTo(myPos);
-                    var myMarker = new google.maps.Marker({
+                    myMarker = new google.maps.Marker({
                         'icon': {
                             'path': google.maps.SymbolPath.CIRCLE,
                             'fillColor': '#4285F4',
@@ -333,7 +333,7 @@ block scripts
                         'map': map
                     });
 
-                    var accuracy = new google.maps.Circle({
+                    myAccuracy = new google.maps.Circle({
                         'strokeColor': '#4285F4',
                         'strokeWeight': 2,
                         'fillColor': '#4285F4',
@@ -344,7 +344,7 @@ block scripts
                     });
                     isLocated = true;
                 } else {
-                    accuracy.setCenter(myPos);
+                    myAccuracy.setCenter(myPos);
                     myMarker.setPosition(myPos);
                 }
             }, function(err){
