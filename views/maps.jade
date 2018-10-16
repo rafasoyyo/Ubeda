@@ -351,7 +351,7 @@ block scripts
                 //-     });
                 //- }, 3000)
             }, function(err){
-                alert(String(err));
+                alert( err.code + ' ' + err.message );
             }, { timeout: 30000 });
         }
 
