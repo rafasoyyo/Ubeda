@@ -136,7 +136,7 @@ block scripts
 
     script.
 
-        var map, geolocation;
+        var map, geolocation, isLocated;
         var placeService, placeMarker, placesInfo = {};
         var $placeInfo;
 
@@ -310,46 +310,43 @@ block scripts
 
 
         function gps(){
-            alert('gps')
+
             if(geolocation) {
                 navigator.geolocation.clearWatch(geolocation);
             }
             geolocation = navigator.geolocation.watchPosition(function(position){
-                alert('position');
 
                 var myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                map.setCenter(myPos);
 
-                var myMarker = new google.maps.Marker({
-                    'icon': {
-                        'path': google.maps.SymbolPath.CIRCLE,
-                        'fillColor': '#4285F4',
-                        'fillOpacity': 1,
-                        'scale': 6,
-                        'strokeColor': 'white',
+                if (!isLocated) {
+                    map.panTo(myPos);
+                    var myMarker = new google.maps.Marker({
+                        'icon': {
+                            'path': google.maps.SymbolPath.CIRCLE,
+                            'fillColor': '#4285F4',
+                            'fillOpacity': 1,
+                            'scale': 6,
+                            'strokeColor': 'white',
+                            'strokeWeight': 2,
+                        },
+                        'position': myPos,
+                        'map': map
+                    });
+
+                    var accuracy = new google.maps.Circle({
+                        'strokeColor': '#4285F4',
                         'strokeWeight': 2,
-                    },
-                    'position': myPos,
-                    'map': map
-                });
-
-                var accuracy = new google.maps.Circle({
-                    'strokeColor': '#4285F4',
-                    'strokeWeight': 2,
-                    'fillColor': '#4285F4',
-                    'fillOpacity': 0.3,
-                    'map': map,
-                    'radius': position.coords.accuracy,
-                    'center': myPos,
-                });
-
-                //- setInterval(function(){
-                //-     navigator.geolocation.getCurrentPosition(function(position){
-                //-         myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                //-         accuracy.setCenter(myPos);
-                //-         myMarker.setPosition(myPos);
-                //-     });
-                //- }, 3000)
+                        'fillColor': '#4285F4',
+                        'fillOpacity': 0.3,
+                        'map': map,
+                        'radius': position.coords.accuracy,
+                        'center': myPos,
+                    });
+                    isLocated = true;
+                } else {
+                    accuracy.setCenter(myPos);
+                    myMarker.setPosition(myPos);
+                }
             }, function(err){
                 alert( err.code + ' ' + err.message );
             }, { timeout: 30000 });
