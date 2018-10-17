@@ -43,11 +43,11 @@ block head
         }
 
         #placeInfo .image {
-            width: 90vw;
+            width: 75vw;
             display: inline;
             vertical-align: middle;
             height: initial;
-            margin: 0 10px;
+            margin-right: 10px;
         }
 
         #places {
@@ -138,7 +138,7 @@ block scripts
 
         var map, geolocation, isLocated, myMarker, myAccuracy;
         var placeService, placeMarker, placesInfo = {};
-        var $placeInfo;
+        var $places, $placeInfo;
 
         //- Iniciar mapa y su configuración
         function initMap() {
@@ -211,6 +211,7 @@ block scripts
             }, function(res, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     res = res[0];
+                    var placeId = res.place_id;
                     placeMarker = new google.maps.Marker({
                         'icon': {
                             'url': res.icon,
@@ -222,36 +223,22 @@ block scripts
                         },
                         'map': map
                     });
+                    placeMarker.place_id = placeId;
+                    placeMarker.addListener('click', function() {
+                        placeFocus(this.place_id);
+                    });
 
-                    placesInfo[res.place_id] = res;
-                    placesInfo[res.place_id].marker = placeMarker;
+                    placesInfo[placeId] = res;
+                    placesInfo[placeId].marker = placeMarker;
 
-                    that.data('placeid', res.place_id);
+                    that.attr('id', placeId);
+                    that.data('placeid', placeId);
                     that.find('.rating').text(res.rating);
                     if (res.photos && res.photos.length) {
                         that.children('.place-background').css({ 'background-image': 'url(' + res.photos[0].getUrl() + ')' });
                     }
                     that.click(function(){
-                        //- Set original state to all markers
-                        Object.keys(placesInfo).forEach(function(item){
-                            placesInfo[item].marker.setIcon({
-                                'url': res.icon,
-                                'scaledSize': new google.maps.Size(25, 25)
-                            });
-                            placesInfo[item].marker.setZIndex(1);
-                        });
-
-                        //- Set important state to selected markers
-                        var place = placesInfo[data.placeid];
-                        map.panTo({
-                            lat: place.geometry.location.lat(),
-                            lng: place.geometry.location.lng()
-                        });
-                        place.marker.setIcon({
-                            'url': res.icon,
-                            'scaledSize': new google.maps.Size(50, 50)
-                        })
-                        place.marker.setZIndex(10);
+                        placeFocus(data.placeid);
                     });
                     findPlace(++i);
                 } else {
@@ -261,13 +248,11 @@ block scripts
                     }, 1000);
                 }
             });
-
         }
 
-        function placeDetails (t){
 
+        function placeDetails (t){
             var data = $(t).closest('.place').data();
-            console.log(data)
             placeService.getDetails({
                 placeId: data.placeid,
                 fields: ['place_id', 'website', 'international_phone_number', 'photos', 'formatted_address', 'name']
@@ -280,7 +265,7 @@ block scripts
                         images += '<img class="image" src=" ' + img.getUrl() + ' "></img>';
                     });
 
-                    $placeInfo.find('.scroll-images').width( (($(window).width() * 0.9) + 21) * res.photos.length );
+                    $placeInfo.find('.scroll-images').width( (($(window).width() * 0.75) + 11) * res.photos.length );
 
                     $placeInfo
                         .find('.scroll-images')
@@ -306,6 +291,36 @@ block scripts
                     $placeInfo.show()
                 }
             });
+        }
+
+
+        function placeFocus(placeid){
+            var icon;
+            //- Set original state to all markers
+            Object.keys(placesInfo).forEach(function(item){
+                icon = placesInfo[item].marker.getIcon();
+                placesInfo[item].marker.setIcon({
+                    'url': icon.url,
+                    'scaledSize': new google.maps.Size(25, 25)
+                });
+                placesInfo[item].marker.setZIndex(1);
+            });
+
+            var place = placesInfo[placeid];
+            var item = $places.find('#' + placeid);
+            if (item) {
+                $places.animate({ scrollLeft: $places.scrollLeft() + item.offset().left - 15 }, 500);
+            }
+            map.panTo({
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng()
+            });
+            icon = place.marker.getIcon();
+            place.marker.setIcon({
+                'url': icon.url,
+                'scaledSize': new google.maps.Size(50, 50)
+            })
+            place.marker.setZIndex(10);
         }
 
 
@@ -352,11 +367,12 @@ block scripts
             }, { timeout: 30000 });
         }
 
-        $('document').ready(function(){
 
+        $('document').ready(function(){
             //- Scroll Sizing depending on number of elements
             var w60 = $(window).width() * 0.6;
-            $('#places .scroll-places').width( ($('.place').length * (w60 + 10)) + 20 );
+            $places = $('#places')
+            $places.find('.scroll-places').width( ($('.place').length * (w60 + 10)) + 20 );
 
             $placeInfo = $('#placeInfo');
             $placeInfo.find('.close').click(function(){
