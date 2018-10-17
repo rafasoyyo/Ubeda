@@ -104,16 +104,16 @@ block content
                     h1.name
                 div
                     label.bold Info:
-                    a.info
+                    a.info(target="_bank")
                 div
                     label.bold Teléfono:
-                    a.phone
+                    a.phone(target="_bank")
                 div
                     label.bold Dirección:
-                    p.unmar.address
+                    a.unmar.address(target="_bank")
                 div
                     label.bold Web:
-                    a.web
+                    a.web(target="_bank")
             div.images
                 .scroll-images
 
@@ -278,10 +278,11 @@ block scripts
                             .text(res.name)
                         .end()
                         .find('.phone')
-                            .attr('href', res.international_phone_number)
+                            .attr('href', 'tel: ' + res.international_phone_number)
                             .text(res.international_phone_number)
                         .end()
                         .find('.address')
+                            .attr('href', "http://maps.google.com/?q=" + res.name + ' ' + res.formatted_address)
                             .text(res.formatted_address)
                         .end()
                         .find('.web')
