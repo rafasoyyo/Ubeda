@@ -3,9 +3,10 @@
         "title": "El Salvador",
         "places": [
             {
-                "identifier": "Iglesia del Salvador de Úbeda",
-                "name": "Iglesia del Salvador",
-                "tipo": "Iglesia"
+                "identifier": "Sacra capilla del Salvador de Úbeda",
+                "name": "Capilla del Salvador",
+                "tipo": "Iglesia",
+                    "info": "Mandada construir en 1536, formaba parte de un extenso programa artístico del que formaban parte su Palacio, una Universidad y un Hospital destinado a encumbrar la fama, la fortuna y la gloria personal que había alcanzado el secretario personal de Carlos V. El Salvador fue la empresa más ambiciosa de toda la arquitectura religiosa privada del Renacimiento español. Declarado monumento histórico-artístico en 1931, se ha convertido, a su vez, en uno de los más divulgados símbolos de esta ciudad cuyo conjunto monumental renacentista, que junto con el de Baeza, fue declarado Patrimonio de la Humanidad por la Unesco en 2003.<br> Fuente: Wikipedia"
             }
         ]
     },
@@ -20,7 +21,9 @@
             {
                 "identifier": "El Parador de Úbeda",
                 "name": "El Parador de Turismo",
-                "tipo": "Hotel"
+                "tipo": "Hotel",
+                "recomendacion": "Recomendado",
+                "info": ""
             },
             {
                 "identifier": "Hotel Real Ciudad de Úbeda",
@@ -36,12 +39,15 @@
                 "identifier": "Hotel El Postigo",
                 "name": "El Postigo",
                 "tipo": "Hotel",
-                "info": "Lugar reservado por completo. Recomendado para grupos."
+                "info": "Lugar reservado por completo. Recomendado para grupos.",
+                "info": ""
             },
             {
                 "identifier": "Hotel María de Molina",
                 "name": "María de Molina",
-                "tipo": "Hotel"
+                "tipo": "Hotel",
+                "recomendacion": "Recomendado",
+                "info": "Un lugar con toda la esencia de Úbeda y con una ubicación inmejorable."
             },
             {
                 "identifier": "Hotel Nueve Leyendas",
@@ -51,7 +57,9 @@
             {
                 "identifier": "Hotel Rosaleda de Don Pedro",
                 "name": "Rosaleda de Don Pedro",
-                "tipo": "Hotel"
+                "tipo": "Hotel",
+                "recomendacion": "Recomendado",
+                "info": "Un lugar con todas las comodidades (parking, spa, accesibilidad) en pleno centro de Úbeda. Descuento acordado con los novios."
             },
             {
                 "identifier": "Hotel Afán de Rivera",
@@ -82,12 +90,15 @@
             {
                 "identifier": "Apartamentos Sol de Mayo",
                 "name": "Sol de Mayo",
-                "tipo": "Apartamentos"
+                "tipo": "Apartamento",
+                "recomendacion": "Recomendado"
             },
             {
                 "identifier": "Apartamentos El Losal",
                 "name": "El Losal",
-                "tipo": "Apartamentos"
+                "tipo": "Apartamento",
+                "recomendacion": "Muy recomendado",
+                "info": "Lugar reservado por completo por los novios. Cuenta con 8 mini-apartamentos con una o varias habitaciones y un total de unas 30 plazas aproximadamente."
             }
         ]
     },
@@ -122,7 +133,9 @@
             {
                 "identifier": "Misa de 12 en Úbeda",
                 "name": "Misa de 12",
-                "tipo": "Taberna"
+                "tipo": "Taberna",
+                "recomendacion": "Muy recomendado",
+                "info": ""
             }
         ]
 

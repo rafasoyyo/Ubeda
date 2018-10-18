@@ -83,7 +83,7 @@ block head
 
         .place {
             margin-right: 10px;
-            width: 60vw;
+            width: 61vw;
             height: 100%;
             display: inline-block;
             box-shadow: 1px 1px 5px -1px black;
@@ -104,7 +104,8 @@ block head
             overflow: auto;
         }
 
-        .place-box em {
+        .place-box em,
+        .place-box i {
             font-size: 11px;
         }
 
@@ -137,7 +138,7 @@ block content
                 div
                     h1.name
                 div
-                    a.info(target="_bank")
+                    a.info(style="line-height: 20px;" target="_bank")
                 button
                     a.phone(target="_bank")
                         i.fa.fa-phone
@@ -161,8 +162,12 @@ block content
                         .place-box
                             h3.unmar.bold= place.name
                             em.unmar= place.tipo
-                            span(style="padding: 5px") ·
+                            span(style="padding:0 4px") ·
                             em.rating
+                            i.fa.fa-star(style="padding-left: 2px")
+                            if place.recomendacion
+                                span(style="padding:0 4px") ·
+                                em= place.recomendacion
                             div(style=" text-align: center; ")
                                 button(onclick="placeDetails(this)" style=" border: 1px solid grey; margin: 5px;") More Info
 
@@ -411,7 +416,7 @@ block scripts
 
         $('document').ready(function(){
             //- Scroll Sizing depending on number of elements
-            var w60 = $(window).width() * 0.6;
+            var w60 = $(window).width() * 0.61;
             $places = $('#places')
             $places.find('.scroll-places').width( ($('.place').length * (w60 + 10)) + 20 );
 
