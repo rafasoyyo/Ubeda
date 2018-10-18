@@ -3,7 +3,7 @@
         "title": "El Salvador",
         "places": [
             {
-                "identifier": "Iglesia del Salvador",
+                "identifier": "Iglesia del Salvador de Úbeda",
                 "name": "Iglesia del Salvador",
                 "tipo": "Iglesia"
             }
@@ -115,5 +115,16 @@
                 "tipo": "Alcázares"
             }
         ]
+    },
+    "detapas": {
+        "title": "Tapeo en Úbeda",
+        "places": [
+            {
+                "identifier": "Misa de 12 en Úbeda",
+                "name": "Misa de 12",
+                "tipo": "Taberna"
+            }
+        ]
+
     }
 }

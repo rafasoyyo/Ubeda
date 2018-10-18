@@ -19,6 +19,7 @@ block head
             background-color: white;
             box-shadow: 0 0 10px 1px grey;
             overflow: scroll;
+            color: #607D8B;
         }
 
         #placeInfo .close {
@@ -30,11 +31,30 @@ block head
         }
 
         #placeInfo a {
-            padding: 0 10px;
+            //- padding: 0 10px;
+            text-decoration: none;
         }
 
         #placeInfo > div > div{
             margin-bottom: 10px;
+        }
+
+        #placeInfo button {
+            padding: 4px 15px;
+            color: #607D8B;
+            border: 1px solid #607D8B;
+            font-size: 11px;
+            min-width: 48%;
+            max-width: 98%;
+            margin: 1%;
+            background-color: white;
+        }
+
+        #placeInfo span,
+        #placeInfo i {
+            padding: 0 3px;
+            font-size: 13px;
+            color: #607D8B;
         }
 
         #placeInfo .images {
@@ -77,9 +97,23 @@ block head
         }
 
         .place-box h3 {
+            font-size: 15px;
+            font-weight: bold;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: auto;
+        }
+
+        .place-box em {
+            font-size: 11px;
+        }
+
+        .place-box button {
+            border: 1px;
+            padding: 4px 15px;
+            color: white;
+            background-color: #607D8B;
+            font-size: 11px;
         }
 
         .place-background {
@@ -99,21 +133,23 @@ block content
 
         #placeInfo(style="display: none")
             .close.fa.fa-times()
-            div(style="padding: 10px 20px")
+            div(style="text-center; padding: 10px 20px")
                 div
                     h1.name
                 div
-                    label.bold Info:
                     a.info(target="_bank")
-                div
-                    label.bold Teléfono:
+                button
                     a.phone(target="_bank")
-                div
-                    label.bold Dirección:
-                    a.unmar.address(target="_bank")
-                div
-                    label.bold Web:
+                        i.fa.fa-phone
+                        span
+                button
                     a.web(target="_bank")
+                        i.fa.fa-link
+                        span Web
+                button
+                    a.unmar.address(target="_bank")
+                        i.fas.fa-map-marked-alt
+                        span
             div.images
                 .scroll-images
 
@@ -143,7 +179,7 @@ block scripts
         //- Iniciar mapa y su configuración
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: new google.maps.LatLng( 38.0114236, -3.3712457),
+                center: new google.maps.LatLng( 38.008700, -3.369500),
                 disableDefaultUI: true,
                 zoom: 16,
                 mapTypeControlOptions: {
@@ -255,11 +291,10 @@ block scripts
             var data = $(t).closest('.place').data();
             placeService.getDetails({
                 placeId: data.placeid,
-                fields: ['place_id', 'website', 'international_phone_number', 'photos', 'formatted_address', 'name']
+                fields: ['place_id', 'website', 'formatted_phone_number', 'photos', 'formatted_address', 'name']
             }, function(res, status) {
+                console.log(status, res, data)
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    console.log(res)
-
                     var images = '';
                     (res.photos).forEach(function(img){
                         images += '<img class="image" src=" ' + img.getUrl() + ' "></img>';
@@ -272,22 +307,27 @@ block scripts
                             .html(images)
                         .end()
                         .find('.info')
-                            .text(data.info)
+                            .text( (data.info && data.info.length && data.info !== 'undefined') ? data.info : '' )
                         .end()
                         .find('.name')
                             .text(res.name)
                         .end()
                         .find('.phone')
-                            .attr('href', 'tel: ' + res.international_phone_number)
-                            .text(res.international_phone_number)
-                        .end()
-                        .find('.address')
-                            .attr('href', "http://maps.google.com/?q=" + res.name + ' ' + res.formatted_address)
-                            .text(res.formatted_address)
+                            .attr('href', 'tel: ' + res.formatted_phone_number)
+                            .find('span')
+                                .text(res.formatted_phone_number)
+                            .end()
                         .end()
                         .find('.web')
                             .attr('href', res.website)
-                            .text('Enlace')
+                            //- .find('span')
+                            //-     .text('Enlace')
+                            //- .end()
+                        .end()
+                        .find('.address')
+                            .attr('href', "http://maps.google.com/?q=" + res.name + ' ' + res.formatted_address)
+                            .find('span')
+                                .text(res.formatted_address)
 
                     $placeInfo.show()
                 }

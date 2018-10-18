@@ -1,11 +1,14 @@
 body {
   margin: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px sans-serif;
 }
 
 /*               */
 /*    GENERAL    */
 /*               */
+.font {
+  font-family: 'Dancing Script', cursive;
+}
 
 #header{
   max-width: 100vw;
