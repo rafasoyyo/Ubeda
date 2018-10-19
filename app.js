@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/.well-known/acme-challenge/iPIYe9fnfWQDAa_anA_rCBg8U8VmPSltrazs19dOxuY', express.static(path.join(__dirname, 'public', 'cert')));
 app.use(function(req, res, next){
   if (req.hostname != 'localhost' && (req.get('X-Forwarded-Proto') === 'http' || req.protocol === 'http')) {
     return res.redirect(`https://${req.hostname}${req.url}`);
@@ -22,8 +23,6 @@ app.use(function(req, res, next){
     next();
   }
 });
-
-app.use('/.well-known/acme-challenge/iPIYe9fnfWQDAa_anA_rCBg8U8VmPSltrazs19dOxuY', express.static(path.join(__dirname, 'public', 'cert')));
 app.use('/', require('./routes/index'));
 
 
