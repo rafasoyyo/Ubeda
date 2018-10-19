@@ -16,13 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/.well-known/acme-challenge/9idBKDEVs4TST0Q-3ZkxEvYmRxe_7s1amI_WaiEQhQ8', express.static(path.join(__dirname, 'public', 'cert')));
-app.use(function(req, res, next){
-  if (req.hostname != 'localhost' && (req.get('X-Forwarded-Proto') === 'http' || req.protocol === 'http')) {
-    return res.redirect(`https://${req.hostname}${req.url}`);
-  } else {
-    next();
-  }
-});
+// app.use(function(req, res, next){
+//   if (req.hostname != 'localhost' && (req.get('X-Forwarded-Proto') === 'http' || req.protocol === 'http')) {
+//     return res.redirect(`https://${req.hostname}${req.url}`);
+//   } else {
+//     next();
+//   }
+// });
 app.use('/', require('./routes/index'));
 
 
