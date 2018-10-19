@@ -121,7 +121,7 @@
                 "tipo": "Palacio"
             },
             {
-                "identifier": "Basílica de Santa María de los Reales Alcázares",
+                "identifier": "Santa María de los Reales Alcázares",
                 "name": "Reales Alcázares",
                 "tipo": "Alcázares"
             }
@@ -135,35 +135,7 @@
                 "name": "Misa de 12",
                 "tipo": "Taberna",
                 "recomendacion": "Muy recomendado",
-                "info": "Se trata de un minúsculo local donde años antes se encontraba un clásico local, el ultramarinos Salido. Ahora, en una mínuscula cocina con un fuego y una plancha, Manoli prepara raciones a base de buenos productos. Hoy es un lugar de refrencia en Úbeda. Chacina ibérica de bellota, atún rojo, bacalao a la parrila o chuletón de vaca vieja son algunos de los platos de Misa de 12."
-            },
-            {
-                "identifier": "Restaurante La Imprenta",
-                "name": "La Imprenta",
-                "tipo": "Taberna",
-                "recomendacion": "Muy recomendado",
-                "info": "La imprenta, uno de esos lugares donde hay llegar temprano para encontrar sitio. Son obligadas allí platos como la tempura de berenjenas con miel, los espárragos a la brasa, las alchofas con foie o el pulpo braseado."
-            },
-            {
-                "identifier": "Los Buñoleros",
-                "name": "Los Buñoleros",
-                "tipo": "Bar",
-                "recomendacion": "Muy recomendado",
-                "info": "Un bar típico de los de siempre. Las raciones de fritura de pescado, los caracoles o los montaditos de lomo son algunas de las especialidades de este bar que aunque no se encuentra en el centro histórico siempre se encuentra lleno de personas que se acercan a degustar sus platos."
-            },
-            {
-                "identifier": "Restaurante Cantina de Úbeda",
-                "name": "Cantina de Úbeda",
-                "tipo": "Restaurante",
-                "recomendacion": "Muy recomendado",
-                "info": "Sorprende por su ambientación, pues tiene un bar de tapas a modo de estación y una sala que imita en el interior de un antiguo vagón de tren, con las ventanas simuladas por pantallas de TV. Ofrecen una carta actual, un completo menú desgustación y guisos del día."
-            },
-            {
-                "identifier": "La bodega de Úbeda",
-                "name": "La Bodega de Úbeda",
-                "tipo": "Taberna",
-                "recomendacion": "Muy recomendado",
-                "info": "Situada en una las calles de tapeo por excelencia, puedes encontrar esta bodega en la que en su interior se puede visitar una antigua bodega. Tapas caseras y típicas de la zona. Un lugar donde tomar una ronda es éxito asegurado."
+                "info": ""
             }
         ]
 
