@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
 /* GET maps page. */
 router.get('/sitios/:sitio', function(req, res, next) {
   var item = places[req.params.sitio];

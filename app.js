@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://ubeda:ubeda2018@ds125502.mlab.com:25502/ubeda', { useNewUrlParser: true });
+
 var app = express();
 
 // view engine setup

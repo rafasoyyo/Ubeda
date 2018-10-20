@@ -126,7 +126,7 @@ block content
     header#header
         a(href="/")
             i.fas.fa-chevron-left(style="position: absolute; top: 0; left: 0; margin: 15px")
-        h1.unmar= title
+        h2(style=" margin: 5px 0;")= title
         i.fas.fa-map-marker-alt(style="position: absolute; top: 0; right: 0; margin: 15px" onclick="gps()")
 
     main
@@ -161,15 +161,15 @@ block content
                         .place-background.background
                         .place-box
                             h3.unmar.bold= place.name
-                            em.unmar= place.tipo
+                            em.unmar= place.type
                             span(style="padding:0 4px") ·
                             em.rating
                             i.fa.fa-star(style="padding-left: 2px")
-                            if place.recomendacion
+                            if place.recomendation
                                 span(style="padding:0 4px") ·
-                                em= place.recomendacion
+                                em= place.recomendation
                             div(style=" text-align: center; ")
-                                button(onclick="placeDetails(this)" style=" border: 1px solid grey; margin: 5px;") More Info
+                                button(onclick="placeDetails(this)" style=" border: 1px solid grey; margin: 5px;") Ver más
 
 block scripts
     script(src="//maps.googleapis.com/maps/api/js?key=AIzaSyDOUok9C5sAw7TY0Uvba7Bn63YoTJjt0CU&libraries=places&callback=initMap" async defer)
@@ -277,6 +277,8 @@ block scripts
                     that.find('.rating').text(res.rating);
                     if (res.photos && res.photos.length) {
                         that.children('.place-background').css({ 'background-image': 'url(' + res.photos[0].getUrl() + ')' });
+                    } else {
+                        that.children('.place-background').css({ 'background-image': 'url(/images/default.jpg)' });
                     }
                     that.click(function(){
                         placeFocus(data.placeid);
@@ -300,12 +302,17 @@ block scripts
             }, function(res, status) {
                 console.log(status, res, data)
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    var images = '';
-                    (res.photos).forEach(function(img){
-                        images += '<img class="image" src=" ' + img.getUrl() + ' "></img>';
-                    });
 
-                    $placeInfo.find('.scroll-images').width( (($(window).width() * 0.75) + 11) * res.photos.length );
+                    var images = '';
+                    if (res.photos && res.photos.length) {
+                        (res.photos).forEach(function(img){
+                            images += '<img class="image" src=" ' + img.getUrl() + ' "></img>';
+                            $placeInfo.find('.scroll-images').width( (($(window).width() * 0.75) + 11) * res.photos.length );
+                        });
+                    } else {
+                        images += '<img class="image" src="/images/default.jpg"></img>';
+                        $placeInfo.find('.scroll-images').width( (($(window).width() * 0.9) ));
+                    }
 
                     $placeInfo
                         .find('.scroll-images')
@@ -335,6 +342,8 @@ block scripts
                                 .text(res.formatted_address)
 
                     $placeInfo.show()
+                } else {
+                    console.error('Place not found: ', data);
                 }
             });
         }
@@ -409,8 +418,8 @@ block scripts
                     myMarker.setPosition(myPos);
                 }
             }, function(err){
-                alert( err.code + ' ' + err.message );
-            }, { timeout: 30000 });
+                alert( 'Ups! parece que algo no va bien...', err.code + ' ' + err.message );
+            }, { timeout: 5000 });
         }
 
 
