@@ -418,7 +418,7 @@ block scripts
                     myMarker.setPosition(myPos);
                 }
             }, function(err){
-                alert( 'Ups! parece que algo no va bien...', err.code + ' ' + err.message );
+                alert( 'Ups! parece que algo no va bien... ', err.code , ' - ' , err.message );
             }, { timeout: 5000 });
         }
 
