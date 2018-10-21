@@ -157,7 +157,7 @@ block content
         #places
             .scroll-places
                 for place in places
-                    .place(data-identifier="#{place.identifier}" data-info="#{place.info}")
+                    .place(data-identifier="#{place.id}" data-info="#{place.info}")
                         .place-background.background
                         .place-box
                             h3.unmar.bold= place.name
@@ -176,7 +176,6 @@ block scripts
     //- script(src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer)
 
     script.
-
         var map, geolocation, isLocated, myMarker, myAccuracy;
         var placeService, placeMarker, placesInfo = {};
         var $places, $placeInfo;
@@ -434,4 +433,3 @@ block scripts
                 $placeInfo.hide();
             })
         });
-
