@@ -1,0 +1,109 @@
+extends layout
+
+block head
+    style.
+        main, main * {
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        main {
+            margin: 25px 15px;
+            overflow: scroll;
+        }
+
+        header#header {
+            box-shadow: 1px 1px 6px -1px grey;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table thead {
+            font-weight: bold;
+        }
+
+        table th,
+        table td {
+            border: 1px solid grey;
+            padding: 5px;
+            min-width: 100px;
+            max-width: 250px;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        table tbody tr::nth-child(even) {
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+block content
+
+    header#header
+        a(href="/")
+            i.fas.fa-chevron-left(style="position: absolute; top: 0; left: 0; margin: 15px")
+        h2(style=" margin: 5px 0;")= title
+
+    main
+        div
+            span Total:
+            span.total
+            span     -    Adultos:
+            span.totalAdultos
+            span     -    Niños:
+            span.totalNinos
+        div
+            span Filtro:
+            input.filtro(type="text" onchange="filtrarInvitados()")
+
+        table
+            thead
+                tr
+                    th Nombre
+                    th Teléfono
+                    th Adultos
+                    th Niños
+                    th Viernes
+                    th Domingo
+                    th Bus
+                    th Comentarios
+            tbody
+                for invitado in invitados
+                    tr
+                        td=  invitado.nombre
+                        td=  invitado.telefono
+                        td.adultos=  invitado.adultos
+                        td.ninos=  invitado.ninos
+                        td=  invitado.viernes
+                        td=  invitado.domingo
+                        td=  invitado.bus
+                        td=  invitado.comentarios
+    script.
+        function filtrarInvitados () {
+            document.querySelector('table tbody tr').forEach()
+        }
+
+        window.onload = function () {
+            var total = 0;
+            var totalAdultos = 0;
+            var totalNinos = 0;
+            var row = document.querySelectorAll('table tbody tr').forEach(function(element){
+                var adultos = element.querySelector('.adultos');
+                if (adultos) {
+                    var a = Number( adultos.textContent );
+                    totalAdultos += isNaN(a) ? 0 : Number(a);
+                }
+
+                var ninos = element.querySelector('.ninos');
+                if (ninos) {
+                    var n = Number( ninos.textContent );
+                    totalNinos += isNaN(n) ? 0 : Number(n);
+                }
+            });
+            document.querySelector('.totalAdultos').textContent = totalAdultos;
+            document.querySelector('.totalNinos').textContent = totalNinos;
+            document.querySelector('.total').textContent = totalAdultos + totalNinos;
+        }

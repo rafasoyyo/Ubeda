@@ -2,10 +2,42 @@ extends layout
 
 block head
     style.
-        form {
-            padding: 15px;
+
+        main * {
+            box-sizing: border-box;
         }
 
+        header#header {
+            box-shadow: 1px 1px 6px -1px grey;
+        }
+
+        .msg {
+            width: calc(100vw - 20px);
+            height: calc(100vh - 20px);
+            top: 10px;
+            left: 10px;
+            margin: 0;
+            padding: 25px 15px;
+            z-index: 10;
+            position: fixed;
+            background-color: white;
+            box-shadow: 0 0 10px 1px grey;
+            overflow: scroll;
+            color: #607D8B;
+        }
+
+        .msg .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 15px 20px;
+            font-size: 20px;
+        }
+
+        form {
+            padding: 25px 15px;
+            font-size: 14px;
+        }
 
         form .data {
             margin-bottom: 25px;
@@ -13,18 +45,22 @@ block head
 
         form .block,
         form label,
-        form input[type="text"] {
+        form input[type="text"],
+        form input[type="tel"],
+        form textarea {
             display: block;
             width: 100%;
         }
 
-        form input {
+        form input,
+        form textarea {
             border: none;
             border-bottom: 1px solid grey;
             outline: none;
         }
 
-        form input:focus {
+        form input:focus,
+        form textarea:focus {
             border: none;
             border-bottom: 3px solid #607D8B;
         }
@@ -43,14 +79,19 @@ block head
             border: 1px solid #607D8B;
         }
 
+        form input[type="number"] {
+            display: inline-block;
+            width: 50%;
+        }
+
         form label.btn.more {
-            width: 20%;
-            margin-left: 5%;
+            width: 22%;
+            margin: 0% 1% 0% 4%;
         }
 
         form label.btn.less {
-            width: 20%;
-            margin-left: 3%;
+            width: 22%;
+            margin: 0%;
         }
 
         form input:active + label.btn,
@@ -64,8 +105,8 @@ block head
             color: white;
             padding: 10px 25px;
             font-size: 18px;
-            border-color: rgba(96, 125, 139, .75);
-            background-color: rgba(96, 125, 139, .5);
+            border-color: rgba(96, 125, 139, 1);
+            background-color: rgba(96, 125, 139, .75);
         }
 
 block content
@@ -77,11 +118,24 @@ block content
         h2(style=" margin: 5px 0;")= title
 
     main#main
-        form(method="POST" action="/")
+        if error
+            #error.msg
+                .close.fa.fa-times()
+                h1 Ups! Algo no fue bien
+                p #{error}
+
+        if invitado
+            #invitado.msg
+                .close.fa.fa-times()
+                h1 Estupendo!
+                p Todo se ha guardado bien y nos alegra mucho que estés con nosotros en este día #{invitado}
+
+
+        form(method="POST" action="/invitado")
 
             div#name.data
                 label(for="") Sabiendo tu nombre podremos identificarte
-                input(type="text" name="name" placeholder="Nombre")
+                input(type="text" name="nombre" placeholder="Nombre")
 
             div#telefono.data
                 label(for="") Sabiendo tu teléfono podremos contactarte
@@ -89,46 +143,46 @@ block content
 
             div#adultos.data
                 label(for="") Cuantos adultos seréis
-                input#adultos_count(type="number" name="adultos" placeholder="Adultos" value="0" min="0")
+                input#adultos_count(type="number" name="adultos" placeholder="Adultos" value="0" min="0" onchange="ensure('adultos_count')")
                 label.btn.more(onclick="count('adultos_count', true)") +
                 label.btn.less(onclick="count('adultos_count', false)") -
 
             div#ninos.data
-                label(for="") Cuantos niños vendrán con vosotros (mayores de 2 años)
-                input#ninos_count(type="number" name="ninos" placeholder="Niños" value="0" min="0")
+                label(for="") Cuantos niños vendrán con vosotros (entre 2 y 16 años)
+                input#ninos_count(type="number" name="ninos" placeholder="Niños" value="0" min="0" onchange="ensure('adultos_count')")
                 label.btn.more(onclick="count('ninos_count', true)") +
                 label.btn.less(onclick="count('ninos_count', false)") -
 
             div#viernes.data
                 label(for="") Si puedes estar el viernes por la tarde prepararemos algo para ti
 
-                input#viwernes_si.hidden(type="radio" name="viernes" value="Yes")
+                input#viwernes_si.hidden(type="radio" name="viernes" value="true")
                 label.btn(for="viwernes_si") ¡Claro que si!
 
-                input#viwernes_no.hidden(type="radio" name="viernes" value="no")
+                input#viwernes_no.hidden(type="radio" name="viernes" value="false")
                 label.btn(for="viwernes_no") No creo que pueda
 
             div#domingo.data
                 label(for="") Si puedes estar el domingo por la mañana prepararemos algo para ti
 
-                input#domingo_si.hidden(type="radio" name="domingo" value="Yes")
+                input#domingo_si.hidden(type="radio" name="domingo" value="true")
                 label.btn(for="domingo_si") ¡Claro que sí!
 
-                input#domingo_no.hidden(type="radio" name="domingo" value="no")
+                input#domingo_no.hidden(type="radio" name="domingo" value="false")
                 label.btn(for="domingo_no") No creo que pueda
 
             div#bus.data
-                label(for="") Quieres ir en bus al convite(4-8km según ruta)
+                label(for="") Quieres ir en bus al convite (de 4 a 8km según ruta)
 
-                input#bus_si.hidden(type="radio" name="bus" value="Yes")
-                label.btn(for="viwernes_si") ¡Sí, lo prefiero!
+                input#bus_si.hidden(type="radio" name="bus" value="true")
+                label.btn(for="bus_si") ¡Sí, lo prefiero!
 
-                input#bus_no.hidden(type="radio" name="bus" value="no")
-                label.btn(for="viwernes_no") No, iré por mi cuenta
+                input#bus_no.hidden(type="radio" name="bus" value="false")
+                label.btn(for="bus_no") No, iré por mi cuenta
 
             div#comentarios.data
                 label(for="") Algo que debamos saber (alergias, intolerancias, dietas...)
-                textarea(type="text" name="comments" placeholder="Comentarios")
+                textarea(type="text" name="comentarios" placeholder="Comentarios")
 
             .text-center
                 input(type="submit" value="Enviar")
@@ -136,12 +190,20 @@ block content
     script.
         function count (id, add) {
             var input = document.getElementById(id);
-            console.log(input)
             if (add) {
                 input.value = Number(input.value) + 1;
             } else {
-                input.value = Number(input.value)  - 1;
+                if(input.value > 0) {
+                    input.value = Number(input.value)  - 1;
+                }
             }
-            console.log(input.value)
+        }
+
+
+        function ensure (id) {
+            var input = document.getElementById(id);
+            if(input.value < 0) {
+                input.value = 0;
+            }
         }
 

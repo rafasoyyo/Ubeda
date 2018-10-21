@@ -5,9 +5,10 @@ var invitadoSchema = new Schema({
     "nombre"  : { type: 'String' },
     "telefono": { type: 'String' },
     "adultos" : { type: 'String' },
-    "niños"   : { type: 'String' },
+    "ninos"   : { type: 'String' },
     "viernes" : { type: 'Boolean' },
     "domingo" : { type: 'Boolean' },
+    "bus"     : { type: 'Boolean' },
     "comentarios" : { type: 'String' }
 });
 

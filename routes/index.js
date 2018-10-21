@@ -2,21 +2,13 @@
 var express = require('express');
 var router = express.Router();
 
-var Lugares = require('../models/lugares.js')
+
+var Invitados = require('../models/invitados.js');
+var Lugares = require('../models/lugares.js');
 var LosLugares = Lugares.LosLugares;
 var DeTuristeo = Lugares.DeTuristeo;
 var PaDormir = Lugares.PaDormir;
 var DeTapas = Lugares.DeTapas;
-// console.log('Lugares -> ', Lugares);
-// var places = require('./places');
-
-// Object.keys(places).forEach(function(element) {
-//   (places[element].places).forEach(function(place){
-//     console.log('Lugares[element] -> ', Lugares[element]);
-
-//     Lugares[element].create(place)
-//   });
-// });
 
 
 var places = {
@@ -59,14 +51,31 @@ router.get('/sitios/:sitio', function(req, res, next) {
 
 });
 
-/* GET maps page. */
-router.get('/nuevoinvitado', function(req, res, next) {
+
+/* GET invitados page. */
+router.get('/invitado', function(req, res, next) {
   res.render('nuevo_invitado', { title: 'Invitados' });
 });
 
-/* GET maps page. */
-router.post('/nuevoinvitado', function(req, res, next) {
 
-
+/* POST invitados page. */
+router.post('/invitado', function(req, res, next) {
+    console.log(req.body)
+    Invitados.findOneAndUpdate({ telefono: req.body.telefono }, req.body, { upsert: true }, function(err, result){
+      if (err) {
+        var error = err.toString();
+      }
+      res.render('nuevo_invitado', { title: 'Invitados', error: error, invitado: req.body.nombre });
+    })
 });
+
+
+/* GET lista invitados page. */
+router.get('/invitados', function(req, res, next) {
+    Invitados.find({ }, function(err, result){
+      res.render('lista_invitados', { title: 'Invitados', invitados: result });
+    });
+});
+
+
 module.exports = router;
