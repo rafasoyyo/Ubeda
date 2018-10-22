@@ -3,6 +3,11 @@ extends layout
 block head
     style.
 
+        main {
+            padding: 5px 15px;
+            font-size: 14px;
+        }
+
         main * {
             box-sizing: border-box;
         }
@@ -34,9 +39,12 @@ block head
             font-size: 20px;
         }
 
-        form {
-            padding: 25px 15px;
-            font-size: 14px;
+        #note {
+            padding: 15px;
+            border-radius: 3px;
+            text-align: justify;
+            border: 1px solid rgba(60, 140, 50, .5);
+            background-color: rgba(60, 140, 50, .3);
         }
 
         form .data {
@@ -130,6 +138,7 @@ block content
                 h1 Estupendo!
                 p Todo se ha guardado bien y nos alegra mucho que estés con nosotros en este día #{invitado}
 
+        p#note Puedes usar este pequeño formulario si te resulta más cómodo (se tarda menos de un minuto, lo hemos cronometrado), o puedes llamarnos... como prefieras!
 
         form(method="POST" action="/invitado")
 

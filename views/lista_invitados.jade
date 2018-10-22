@@ -4,16 +4,26 @@ block head
     style.
         main, main * {
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         main {
             margin: 25px 15px;
-            overflow: scroll;
         }
 
         header#header {
             box-shadow: 1px 1px 6px -1px grey;
+        }
+
+        input.filtro {
+            border: none;
+            border-bottom: 1px solid #607D8B;
+            outline: none;
+        }
+
+        #table_box {
+            width: 100%;
+            overflow: scroll;
         }
 
         table {
@@ -26,6 +36,7 @@ block head
 
         table th,
         table td {
+            font-size: 14px;
             border: 1px solid grey;
             padding: 5px;
             min-width: 100px;
@@ -55,55 +66,83 @@ block content
             span.totalAdultos
             span     -    Niños:
             span.totalNinos
-        div
-            span Filtro:
-            input.filtro(type="text" onchange="filtrarInvitados()")
 
-        table
-            thead
-                tr
-                    th Nombre
-                    th Teléfono
-                    th Adultos
-                    th Niños
-                    th Viernes
-                    th Domingo
-                    th Bus
-                    th Comentarios
-            tbody
-                for invitado in invitados
+        div(style="margin: 5px 0")
+            span(style="width: 24%") Filtro:
+            input.filtro(type="text" style="margin: 0 10px; width: 50%" onchange="filtrarInvitados(this)")
+            i.fa.fa-search(style="margin: 0 10px; font-size: 18px")
+
+        div#table_box
+            table
+                thead
                     tr
-                        td=  invitado.nombre
-                        td=  invitado.telefono
-                        td.adultos=  invitado.adultos
-                        td.ninos=  invitado.ninos
-                        td=  invitado.viernes
-                        td=  invitado.domingo
-                        td=  invitado.bus
-                        td=  invitado.comentarios
+                        th Nombre
+                        th Teléfono
+                        th Adultos
+                        th Niños
+                        th Viernes
+                        th Domingo
+                        th Bus
+                        th Comentarios
+                tbody
+                    for invitado in invitados
+                        tr
+                            td.name=  invitado.nombre
+                            td=  invitado.telefono
+                            td.adultos=  invitado.adultos
+                            td.ninos=  invitado.ninos
+                            td=  invitado.viernes
+                            td=  invitado.domingo
+                            td=  invitado.bus
+                            td=  invitado.comentarios
+
     script.
-        function filtrarInvitados () {
-            document.querySelector('table tbody tr').forEach()
-        }
+        var filtrarInvitados;
 
         window.onload = function () {
-            var total = 0;
-            var totalAdultos = 0;
-            var totalNinos = 0;
-            var row = document.querySelectorAll('table tbody tr').forEach(function(element){
-                var adultos = element.querySelector('.adultos');
-                if (adultos) {
-                    var a = Number( adultos.textContent );
-                    totalAdultos += isNaN(a) ? 0 : Number(a);
-                }
+            var rows = document.querySelectorAll('table tbody tr');
 
-                var ninos = element.querySelector('.ninos');
-                if (ninos) {
-                    var n = Number( ninos.textContent );
-                    totalNinos += isNaN(n) ? 0 : Number(n);
-                }
-            });
-            document.querySelector('.totalAdultos').textContent = totalAdultos;
-            document.querySelector('.totalNinos').textContent = totalNinos;
-            document.querySelector('.total').textContent = totalAdultos + totalNinos;
+            (function() {
+                var total = 0;
+                var totalAdultos = 0;
+                var totalNinos = 0;
+
+                rows.forEach(function(element){
+                    var adultos = element.querySelector('.adultos');
+                    if (adultos) {
+                        var a = Number( adultos.textContent );
+                        totalAdultos += isNaN(a) ? 0 : Number(a);
+                    }
+
+                    var ninos = element.querySelector('.ninos');
+                    if (ninos) {
+                        var n = Number( ninos.textContent );
+                        totalNinos += isNaN(n) ? 0 : Number(n);
+                    }
+                });
+                document.querySelector('.totalAdultos').textContent = totalAdultos;
+                document.querySelector('.totalNinos').textContent = totalNinos;
+                document.querySelector('.total').textContent = totalAdultos + totalNinos;
+            })();
+
+            filtrarInvitados = function (that) {
+                var name, match;
+                var value = that.value;
+                var query = null;
+                if (value) { query = new RegExp(value, 'gi'); }
+                rows.forEach(function(element){
+                    if (query) {
+                        name = element.querySelector('.name');
+                        match = query.test(name.textContent);
+                        if (match){
+                            element.style.display = "table-row";
+                        } else {
+                            element.style.display = "none";
+                        }
+                    } else {
+                        element.style.display = "table-row";
+                    }
+                });
+            }
+
         }
