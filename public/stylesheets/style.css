@@ -18,6 +18,7 @@ body {
   margin: auto;
   padding: 5px 0;
   text-align: center;
+  position: relative;
   /* background-color: #909090; */
 }
 
@@ -36,6 +37,7 @@ body {
   min-height: 100vh;
   display: block;
   margin: auto;
+  box-sizing: border-box;
 }
 
 .container {
