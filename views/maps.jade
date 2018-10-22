@@ -2,9 +2,12 @@ extends layout
 
 block head
     style.
+        main *{
+            font-size: 15px;
+        }
         #map {
             width: 100%;
-            height: calc(100vh - 250px);
+            height: calc(100vh - 260px);
         }
 
         #placeInfo {
@@ -71,10 +74,10 @@ block head
         }
 
         #places {
-            padding: 10px;
-            height: 185px;
-            width: calc(100vw - 20px);
+            margin: 10px;
+            height: 195px;
             overflow: scroll;
+            box-sizing: border-box;
         }
 
         #places .scroll-places {
@@ -82,12 +85,12 @@ block head
         }
 
         .place {
-            margin-right: 10px;
+            height: 99%;
             width: 61vw;
-            height: 100%;
+            max-width: 300px;
+            margin-right: 10px;
             display: inline-block;
             box-shadow: 1px 1px 5px -1px black;
-            padding: 5px;
             box-sizing: border-box;
             vertical-align: top;
         }
@@ -119,57 +122,57 @@ block head
 
         .place-background {
             height: 65%;
-            margin: -5px  -5px 5px -5px;
         }
 
 block content
-    header#header
-        a(href="/")
-            i.fas.fa-chevron-left(style="position: absolute; top: 0; left: 0; margin: 15px")
-        h2(style=" margin: 5px 0;")= title
-        i.fas.fa-map-marker-alt(style="position: absolute; top: 0; right: 0; margin: 15px" onclick="gps()")
+    .page
+        header#header
+            a(href="/")
+                i.fas.fa-chevron-left(style="position: absolute; top: 0; left: 0; margin: 15px")
+            h2(style=" margin: 5px 0;")= title
+            i.fas.fa-map-marker-alt(style="position: absolute; top: 0; right: 0; margin: 15px" onclick="gps()")
 
-    main
-        #map
+        main
+            #map
 
-        #placeInfo(style="display: none")
-            .close.fa.fa-times()
-            div(style="text-center; padding: 10px 20px")
-                div
-                    h1.name
-                div
-                    a.info(style="line-height: 20px;" target="_bank")
-                button
-                    a.phone(target="_bank")
-                        i.fa.fa-phone
-                        span
-                button
-                    a.web(target="_bank")
-                        i.fa.fa-link
-                        span Web
-                button
-                    a.unmar.address(target="_bank")
-                        i.fas.fa-map-marked-alt
-                        span
-            div.images
-                .scroll-images
+            #placeInfo(style="display: none")
+                .close.fa.fa-times()
+                div(style="text-center; padding: 10px 20px")
+                    div
+                        h1.name
+                    div
+                        a.info(style="line-height: 20px;" target="_bank")
+                    button
+                        a.phone(target="_bank")
+                            i.fa.fa-phone
+                            span
+                    button
+                        a.web(target="_bank")
+                            i.fa.fa-link
+                            span Web
+                    button
+                        a.unmar.address(target="_bank")
+                            i.fas.fa-map-marked-alt
+                            span
+                div.images
+                    .scroll-images
 
-        #places
-            .scroll-places
-                for place in places
-                    .place(data-identifier="#{place.id}" data-info="#{place.info}")
-                        .place-background.background
-                        .place-box
-                            h3.unmar.bold= place.name
-                            em.unmar= place.type
-                            span(style="padding:0 4px") ·
-                            em.rating
-                            i.fa.fa-star(style="padding-left: 2px")
-                            if place.recomendation
+            #places
+                .scroll-places
+                    for place in places
+                        .place(data-identifier="#{place.id}" data-info="#{place.info}")
+                            .place-background.background
+                            .place-box
+                                h3.unmar.bold= place.name
+                                em.unmar= place.type
                                 span(style="padding:0 4px") ·
-                                em= place.recomendation
-                            div(style=" text-align: center; ")
-                                button(onclick="placeDetails(this)" style=" border: 1px solid grey; margin: 5px;") De interés
+                                em.rating
+                                i.fa.fa-star(style="padding-left: 2px")
+                                if place.recomendation
+                                    span(style="padding:0 4px") ·
+                                    em= place.recomendation
+                                div(style=" text-align: center; ")
+                                    button(onclick="placeDetails(this)" style=" border: 1px solid grey; margin: 5px;") De interés
 
 block scripts
     script(src="//maps.googleapis.com/maps/api/js?key=AIzaSyDOUok9C5sAw7TY0Uvba7Bn63YoTJjt0CU&libraries=places&callback=initMap" async defer)
@@ -424,7 +427,7 @@ block scripts
 
         $('document').ready(function(){
             //- Scroll Sizing depending on number of elements
-            var w60 = $(window).width() * 0.61;
+            var w60 = $(window).width() > 800 ? 300 : $(window).width() * 0.61;
             $places = $('#places')
             $places.find('.scroll-places').width( ($('.place').length * (w60 + 10)) + 20 );
 

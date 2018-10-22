@@ -36,7 +36,6 @@ router.get('/', function(req, res, next) {
 router.get('/sitios/:sitio', function(req, res, next) {
 
   Lugares[req.params.sitio].find(function(err, results) {
-    console.log('results -> ', results);
     if (err) {
       res.render('error', {
         err: { status: err.id, stack: err.toString }
@@ -60,7 +59,6 @@ router.get('/invitado', function(req, res, next) {
 
 /* POST invitados page. */
 router.post('/invitado', function(req, res, next) {
-    console.log(req.body)
     Invitados.findOneAndUpdate({ telefono: req.body.telefono }, req.body, { upsert: true }, function(err, result){
       if (err) {
         var error = err.toString();
