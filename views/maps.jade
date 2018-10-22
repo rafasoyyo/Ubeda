@@ -94,6 +94,7 @@ block head
             height: calc(99% - 10px);
             width: 61vw;
             max-width: 300px;
+            min-width: 240px;
             margin-right: 10px;
             display: inline-block;
             box-sizing: border-box;
@@ -435,9 +436,11 @@ block scripts
 
         $('document').ready(function(){
             //- Scroll Sizing depending on number of elements
-            var w60 = $(window).width() > 800 ? 300 : $(window).width() * 0.61;
-            $places = $('#places')
-            $places.find('.scroll-places').width( ($('.place').length * (w60 + 10)) + 20 );
+            //- var w60 = $(window).width() > 800 ? 300 : $(window).width() * 0.61;
+            //- var w60 = $('.place').width();
+            $places = $('#places');
+            $place  = $('.place');
+            $places.find('.scroll-places').width( ($place.length * ( $place.width() + 11)) + 20 );
 
             $placeInfo = $('#placeInfo');
             $placeInfo.find('.close').click(function(){
