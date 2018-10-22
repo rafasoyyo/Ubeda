@@ -10,7 +10,7 @@ block head
         }
         #map {
             width: 100%;
-            height: calc(100vh - 260px);
+            height: calc(70vh - 45px);
         }
 
         #placeInfo {
@@ -77,9 +77,12 @@ block head
         }
 
         #places {
-            margin: 10px;
-            height: 195px;
-            overflow: scroll;
+            //- margin: 10px 10px 10px 0;
+            //- height: 195px;
+            margin: 10px 10px 0px 10px;
+            height: 29vh;
+            overflow-x: scroll;
+            overflow-y: visible;
             box-sizing: border-box;
         }
 
@@ -88,18 +91,20 @@ block head
         }
 
         .place {
-            height: 99%;
+            height: calc(99% - 10px);
             width: 61vw;
             max-width: 300px;
             margin-right: 10px;
             display: inline-block;
-            box-shadow: 1px 1px 5px -1px black;
             box-sizing: border-box;
             vertical-align: top;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 1px 1px 5px -1px black;
         }
 
         .place-box{
-            height: 35%;
+            height: 40%;
+            margin: 2% 5%;
         }
 
         .place-box h3 {
@@ -124,7 +129,7 @@ block head
         }
 
         .place-background {
-            height: 65%;
+            height: 59%;
         }
 
 block content
