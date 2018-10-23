@@ -14,11 +14,12 @@ block head
         }
 
         #placeInfo {
-            width: calc(100vw - 20px);
+            max-width: calc(100vw - 20px);
+            width: 800px;
             height: calc(100vh - 20px);
             top: 10px;
-            left: 10px;
-            margin: 0;
+            margin: 0 auto;
+            display: block;
             padding: 0;
             z-index: 10;
             position: fixed;
@@ -26,6 +27,12 @@ block head
             box-shadow: 0 0 10px 1px grey;
             overflow: scroll;
             color: #607D8B;
+        }
+
+        @media only screen and (max-width: 800px) {
+            #placeInfo {
+                left: 10px;
+            }
         }
 
         #placeInfo .close {
@@ -66,6 +73,7 @@ block head
         #placeInfo .images {
             overflow: scroll;
             margin: 15px;
+            max-width: 400px;
         }
 
         #placeInfo .image {
@@ -435,12 +443,9 @@ block scripts
 
 
         $('document').ready(function(){
-            //- Scroll Sizing depending on number of elements
-            //- var w60 = $(window).width() > 800 ? 300 : $(window).width() * 0.61;
-            //- var w60 = $('.place').width();
             $places = $('#places');
-            $place  = $('.place');
-            $places.find('.scroll-places').width( ($place.length * ( $place.width() + 11)) + 20 );
+            $place  = $places.find('.place');
+            $places.find('.scroll-places').width( ($place.length * ($place.outerWidth() + 10) ) + 2 );
 
             $placeInfo = $('#placeInfo');
             $placeInfo.find('.close').click(function(){
