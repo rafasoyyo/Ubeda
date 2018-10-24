@@ -131,11 +131,12 @@ block content
                 var name, match;
                 var value = that.value;
                 var query = null;
-                if (value) { query = new RegExp(value, 'gi'); }
+                if (value) { query = new RegExp(value, 'i'); }
                 rows.forEach(function(element){
                     if (query) {
                         name = element.querySelector('.name');
                         match = query.test(name.textContent);
+                        console.log(match, query, name.textContent);
                         if (match){
                             element.style.display = "table-row";
                         } else {
