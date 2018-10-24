@@ -2,6 +2,10 @@
 var express = require('express');
 var router = express.Router();
 
+var Bot = require('telegram-api').default;
+var Message = require('telegram-api/types/Message');
+var bot = new Bot({ token: '654952867:AAFnJPiqAq463C2QLGUSknP_vEoHlA60ap8' });
+bot.start();
 
 var Invitados = require('../models/invitados.js');
 var Lugares = require('../models/lugares.js');
@@ -24,6 +28,12 @@ var places = {
     DeTapas: {
         title: "Tapeo en Úbeda",
     }
+}
+
+// Sent BOT message
+var sendMessage = function(id, message) {
+  var answer = new Message().text(message).to(id);
+  bot.send(answer);
 }
 
 /* GET home page. */
@@ -59,10 +69,13 @@ router.get('/invitado', function(req, res, next) {
 
 /* POST invitados page. */
 router.post('/invitado', function(req, res, next) {
-    Invitados.findOneAndUpdate({ telefono: req.body.telefono }, req.body, { upsert: true }, function(err, result){
+    Invitados.findOneAndUpdate({ telefono: req.body.telefono }, req.body, { new: true, upsert: true }, function(err, result){
       if (err) {
         var error = err.toString();
       }
+      // María - 7833074, Rafael - 29399890
+      sendMessage(7833074, 'Nuevo invitado registrado: ' + result.nombre );
+      sendMessage(29399890, 'Nuevo invitado registrado: ' + result.nombre );
       res.render('nuevo_invitado', { title: 'Invitados', error: error, invitado: req.body.nombre });
     })
 });
@@ -73,6 +86,22 @@ router.get('/invitados', function(req, res, next) {
     Invitados.find({ }, function(err, result){
       res.render('lista_invitados', { title: 'Invitados', invitados: result });
     });
+});
+
+/* GET lista invitados from bot. */
+bot.get('/invitados', function(message) {
+    if (message.chat.id == 29399890 || message.chat.id == 7833074) {
+      var text = 'Lista de invitados: \n';
+      Invitados.find({ }, 'nombre', function(err, results){
+        for(var i=0, ilen=results.length; i<ilen; i++ ) {
+          text += results[i].nombre + '\n';
+        } a becomes a reality
+        sendMessage(message.chat.id, text );
+        sendMessage(message.chat.id, 'Ver todos los datos \n https://mariayrafael.family/invitados' );
+      });
+    } else {
+        sendMessage(message.chat.id, 'Not allowed' );
+    }
 });
 
 
