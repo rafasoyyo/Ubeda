@@ -37,6 +37,23 @@ block head
             right: 0;
             margin: 15px 20px;
             font-size: 20px;
+            z-index: 10;
+        }
+
+        .msg h1 {
+            position: relative;
+            z-index: 1;
+        }
+
+        .msg .btn {
+            width: 60%;
+            padding: 10px;
+            text-align: center;
+            display: block;
+            margin: 10px auto;
+            border: 1px solid rgba(96, 125, 139, .75);
+            background-color: rgba(96, 125, 139, .5);
+            color: white;
         }
 
         #note {
@@ -128,15 +145,17 @@ block content
     main#main.page
         if error
             #error.msg
-                .close.fa.fa-times()
+                i.close.fa.fa-times
                 h1 Ups! Algo no fue bien
                 p #{error}
+                a.btn(href="/") Volver al inicio
 
         if invitado
             #invitado.msg
-                .close.fa.fa-times()
-                h1 Estupendo!
+                i.close.fa.fa-times
+                h1(style) Estupendo!
                 p Todo se ha guardado bien y nos alegra mucho que estés con nosotros en este día #{invitado}
+                a.btn(href="/") Volver al inicio
 
         p#note Puedes usar este pequeño formulario si te resulta más cómodo (se tarda menos de un minuto, lo hemos cronometrado), o puedes llamarnos... como prefieras!
 
@@ -215,4 +234,10 @@ block content
                 input.value = 0;
             }
         }
+
+        $(document).ready(function() {
+            $('.close').click(function() {
+                $(this).closest('.msg').hide();
+            });
+        });
 
