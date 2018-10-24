@@ -90,6 +90,7 @@ router.get('/invitados', function(req, res, next) {
 
 /* GET lista invitados from bot. */
 bot.get('/invitados', function(message) {
+    console.log('id: ', message.chat.id);
     if (message.chat.id == 29399890 || message.chat.id == 7833074) {
       var text = 'Lista de invitados: \n';
       Invitados.find({ }, 'nombre', function(err, results){
@@ -103,6 +104,10 @@ bot.get('/invitados', function(message) {
         sendMessage(message.chat.id, 'Not allowed' );
     }
 });
-
+/* GET user bot id */
+bot.get('/id', function(message) {
+    console.log('id: ', message.chat.id);
+    sendMessage(message.chat.id, 'id: ' + message.chat.id );
+});
 
 module.exports = router;
