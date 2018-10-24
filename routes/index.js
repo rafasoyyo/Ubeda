@@ -95,7 +95,7 @@ bot.get('/invitados', function(message) {
       Invitados.find({ }, 'nombre', function(err, results){
         for(var i=0, ilen=results.length; i<ilen; i++ ) {
           text += results[i].nombre + '\n';
-        } a becomes a reality
+        }
         sendMessage(message.chat.id, text );
         sendMessage(message.chat.id, 'Ver todos los datos \n https://mariayrafael.family/invitados' );
       });
