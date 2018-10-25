@@ -90,17 +90,24 @@ router.get('/invitados', function(req, res, next) {
 
 /* GET lista invitados from bot. */
 bot.get('/invitados', function(message) {
-    console.log('id: ', message.chat.id);
+    console.log('Entra: ', message.chat.id);
     if (message.chat.id == 29399890 || message.chat.id == 7833074) {
       var text = 'Lista de invitados: \n';
+      console.log('Valida: ', message.chat.id);
       Invitados.find({ }, 'nombre', function(err, results){
-        for(var i=0, ilen=results.length; i<ilen; i++ ) {
-          text += results[i].nombre + '\n';
+        if(err) {
+          console.error('Error buscando invitados: ', err.toString());
+        } else {
+          for(var i=0, ilen=results.length; i<ilen; i++ ) {
+            text += results[i].nombre + '\n';
+          }
+          console.log(text)
+          sendMessage(message.chat.id, text);
+          sendMessage(message.chat.id, 'Ver todos los datos \n https://mariayrafael.family/invitados' );
         }
-        sendMessage(message.chat.id, text );
-        sendMessage(message.chat.id, 'Ver todos los datos \n https://mariayrafael.family/invitados' );
       });
     } else {
+        console.log('No valida: ', message.chat.id);
         sendMessage(message.chat.id, 'Not allowed' );
     }
 });
