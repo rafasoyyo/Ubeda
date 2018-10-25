@@ -26,7 +26,7 @@ var places = {
         title: "Turismo",
     },
     DeTapas: {
-        title: "Tapeo en Úbeda",
+        title: "Tapeo y Compras",
     }
 }
 
