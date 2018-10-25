@@ -163,11 +163,12 @@ block content
 
             div#name.data
                 label(for="") Sabiendo tu nombre podremos identificarte
-                input(type="text" name="nombre" placeholder="Nombre")
+                input(type="text" name="nombre" placeholder="Ejemplo: Maria y Rafael o tito Juancar... " required)
 
             div#telefono.data
                 label(for="") Sabiendo tu teléfono podremos contactarte
-                input(type="tel" name="telefono" placeholder="Teléfono" required)
+                input(type="tel" name="telefono" placeholder="Ejemplo: 647647647" required)
+                em(style="font-size: 12px") Usando el mismo teléfono podrás actualizar estos datos tantas veces como quieras, pero cuanto antes confirmes más fácil nos lo pones a los novios ;D
 
             div#adultos.data
                 label(for="") Cuantos adultos seréis
@@ -209,8 +210,8 @@ block content
                 label.btn(for="bus_no") No, iré por mi cuenta
 
             div#comentarios.data
-                label(for="") Algo que debamos saber (alergias, intolerancias, dietas...)
-                textarea(type="text" name="comentarios" placeholder="Comentarios")
+                label(for="") ¿Algo que debamos saber?
+                textarea(type="text" name="comentarios" placeholder="Alergias, intolerancias, dietas...")
 
             .text-center
                 input(type="submit" value="Enviar")
