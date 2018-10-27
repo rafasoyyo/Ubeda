@@ -90,26 +90,6 @@ router.get('/guests', function(req, res, next) {
 });
 
 
-/* GET reiniciar bot. */
-router.get('/bot/stop', function(req, res) {
-    bot.stop();
-    res.redirect('/');
-});
-
-/* GET reiniciar bot. */
-router.get('/bot/start', function(req, res) {
-    bot.start();
-    res.redirect('/');
-});
-
-/* GET reiniciar bot. */
-router.get('/bot/restart', function(req, res) {
-    bot.stop();
-    bot.start();
-    res.redirect('/');
-});
-
-
 /* GET lista invitados from bot. */
 bot.get('/guests', function(message) {
     if (message.chat.id == 29399890 || message.chat.id == 7833074) {
@@ -138,19 +118,5 @@ bot.get('/id', function(message) {
     sendMessage(message.chat.id, 'id: ' + message.chat.id );
 });
 
-
-
-/* GET reiniciar bot. */
-router.get('/api/plans', function(req, res) {
-    try {
-        var plan = path.join(__dirname, '../public/', 'tablerrr', 'sitting.json'); 
-        res.sendFile(plan);
-    } catch (e) {
-        console.error(e)
-        res.status(500).end();
-    }
-});
-
-console.log(bot)
 
 module.exports = router;
