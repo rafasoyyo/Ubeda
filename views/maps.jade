@@ -78,10 +78,11 @@ block head
         }
 
         #placeInfo .image {
-            width: 75vw;
+            max-width: 75vw;
+            min-width: 50vw;
+            max-height: 75vh;
             display: inline;
             vertical-align: middle;
-            height: initial;
             margin-right: 10px;
         }
 
@@ -156,7 +157,7 @@ block content
 
             #placeInfo(style="display: none")
                 .close.fa.fa-times()
-                div.text-center(style="padding: 10px 20px")
+                .text-center(style="padding: 10px 20px")
                     div
                         h1.name
                     div
@@ -173,7 +174,7 @@ block content
                         a.unmar.address(target="_bank")
                             i.fas.fa-map-marked-alt
                             span
-                div.images
+                .images
                     .scroll-images
 
             #places
