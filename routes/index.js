@@ -6,7 +6,6 @@ var path = require('path');
 var Bot = require('telegram-api').default;
 var Message = require('telegram-api/types/Message');
 var bot = new Bot({ token: '654952867:AAFnJPiqAq463C2QLGUSknP_vEoHlA60ap8' });
-bot.start();
 
 var Invitados = require('../models/invitados.js');
 var Lugares = require('../models/lugares.js');
@@ -32,63 +31,29 @@ var places = {
 }
 
 
-// Sent BOT message
+/*
+        TELEGRAM BOT 
+*/
+
+/* Sent BOT message */
 var sendMessage = function(id, message) {
     var answer = new Message().text(message).to(id);
     bot.send(answer);
 };
 
+/* Start bot */
+bot.start();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+/* Manage bot errors */
+bot.on('error', function(e) {
+    console.error( 'Telegram Error: ', e.body );
 });
 
-
-/* GET maps page. */
-router.get('/sitios/:sitio', function(req, res, next) {
-    Lugares[req.params.sitio].find(function(err, results) {
-        if (err) {
-            res.render('error', {
-                err: { status: err.id, stack: err.toString }
-            });
-        } else {
-            res.render('maps', {
-                title: places[req.params.sitio].title,
-                places: results
-            });
-        }   
-    });
+/* GET user bot id */
+bot.get('/id', function(message) {
+    console.log('id: ', message.chat.id);
+    sendMessage(message.chat.id, 'id: ' + message.chat.id );
 });
-
-
-/* GET invitados page. */
-router.get('/invitado', function(req, res, next) {
-    res.render('nuevo_invitado', { title: 'Invitados' });
-});
-
-
-/* POST invitados page. */
-router.post('/invitado', function(req, res, next) {
-    Invitados.findOneAndUpdate({ telefono: req.body.telefono }, req.body, { new: true, upsert: true }, function(err, result){
-        if (err) {
-            var error = err.toString();
-        }
-        // María - 7833074, Rafael - 29399890
-        sendMessage(7833074, 'Nuevo invitado registrado: ' + result.nombre );
-        sendMessage(29399890, 'Nuevo invitado registrado: ' + result.nombre );
-        res.render('nuevo_invitado', { title: 'Invitados', error: error, invitado: req.body.nombre });
-    })
-});
-
-
-/* GET lista invitados page. */
-router.get('/guests', function(req, res, next) {
-    Invitados.find({ }, function(err, result){
-        res.render('lista_invitados', { title: 'Invitados', invitados: result });
-    });
-});
-
 
 /* GET lista invitados from bot. */
 bot.get('/guests', function(message) {
@@ -112,10 +77,55 @@ bot.get('/guests', function(message) {
 });
 
 
-/* GET user bot id */
-bot.get('/id', function(message) {
-    console.log('id: ', message.chat.id);
-    sendMessage(message.chat.id, 'id: ' + message.chat.id );
+
+/*
+        EXPRESS 
+*/
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+    res.render('index', { title: 'Express' });
+});
+
+/* GET maps page. */
+router.get('/sitios/:sitio', function(req, res, next) {
+    Lugares[req.params.sitio].find(function(err, results) {
+        if (err) {
+            res.render('error', {
+                err: { status: err.id, stack: err.toString }
+            });
+        } else {
+            res.render('maps', {
+                title: places[req.params.sitio].title,
+                places: results
+            });
+        }   
+    });
+});
+
+/* GET invitados page. */
+router.get('/invitado', function(req, res, next) {
+    res.render('nuevo_invitado', { title: 'Invitados' });
+});
+
+/* POST invitados page. */
+router.post('/invitado', function(req, res, next) {
+    Invitados.findOneAndUpdate({ telefono: req.body.telefono }, req.body, { new: true, upsert: true }, function(err, result){
+        if (err) {
+            var error = err.toString();
+        }
+        // María - 7833074, Rafael - 29399890
+        sendMessage(7833074, 'Nuevo invitado registrado: ' + result.nombre );
+        sendMessage(29399890, 'Nuevo invitado registrado: ' + result.nombre );
+        res.render('nuevo_invitado', { title: 'Invitados', error: error, invitado: req.body.nombre });
+    })
+});
+
+/* GET lista invitados page. */
+router.get('/guests', function(req, res, next) {
+    Invitados.find({ }, function(err, result){
+        res.render('lista_invitados', { title: 'Invitados', invitados: result });
+    });
 });
 
 
