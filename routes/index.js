@@ -91,7 +91,19 @@ router.get('/guests', function(req, res, next) {
 
 
 /* GET reiniciar bot. */
-router.get('/bot', function(req, res) {
+router.get('/bot/stop', function(req, res) {
+    bot.stop();
+    res.redirect('/');
+});
+
+/* GET reiniciar bot. */
+router.get('/bot/start', function(req, res) {
+    bot.start();
+    res.redirect('/');
+});
+
+/* GET reiniciar bot. */
+router.get('/bot/restart', function(req, res) {
     bot.stop();
     bot.start();
     res.redirect('/');
@@ -139,5 +151,6 @@ router.get('/api/plans', function(req, res) {
     }
 });
 
+console.log(bot)
 
 module.exports = router;
