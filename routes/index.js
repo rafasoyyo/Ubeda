@@ -91,8 +91,10 @@ router.get('/guests', function(req, res, next) {
 
 
 /* GET reiniciar bot. */
-router.get('/bot', function(message) {
+router.get('/bot', function(req, res) {
+    bot.stop();
     bot.start();
+    res.redirect('/');
 });
 
 
