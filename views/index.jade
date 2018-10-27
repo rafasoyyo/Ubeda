@@ -26,6 +26,24 @@ block head
             font-size: 30px;
         }
 
+        #asistencia {
+            padding: 20px 25px; 
+            font-size: 24px;
+        }
+
+        #asistencia > div {
+            margin: 20px 0 5px 0;
+        }
+
+        #asistencia > div a{
+            border: 1px;
+            padding: 5px 15px;
+            color: white;
+            background-color: #607D8B;
+            font-size: 26px;
+            text-decoration: none;
+        }
+
         #places {
 
         }
@@ -94,10 +112,12 @@ block content
 
     #places.page
 
-        div(style="padding: 10px 25px; font-size: 20px")
+        #asistencia
             p.font.unmar Recuerda:
             p.font.unmar 18 de Mayo 2019, 13:00h
             p.font.unmar Capilla del Salvador, Úbeda
+            //- div.block.text-center
+                //- a.font(href="/invitado") Confirma tu asistencia
 
         a.card-box(href="/sitios/LosLugares")
             .card-image.background(style="background-image: url('../images/elsalvador.jpg');")

@@ -73,7 +73,7 @@ block head
         #placeInfo .images {
             overflow: scroll;
             margin: 15px;
-            max-width: 400px;
+            max-width: calc(100vw - 20px);
         }
 
         #placeInfo .image {
@@ -154,7 +154,7 @@ block content
 
             #placeInfo(style="display: none")
                 .close.fa.fa-times()
-                div(style="text-center; padding: 10px 20px")
+                div.text-center(style="padding: 10px 20px")
                     div
                         h1.name
                     div
@@ -326,7 +326,7 @@ block scripts
                     if (res.photos && res.photos.length) {
                         (res.photos).forEach(function(img){
                             images += '<img class="image" src=" ' + img.getUrl() + ' "></img>';
-                            $placeInfo.find('.scroll-images').width( (($(window).width() * 0.75) + 11) * res.photos.length );
+                            $placeInfo.find('.scroll-images').width( (($(window).width() * 0.77) + 11) * res.photos.length );
                         });
                     } else {
                         images += '<img class="image" src="/images/default.jpg"></img>';

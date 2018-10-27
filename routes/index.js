@@ -1,6 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 
 var Bot = require('telegram-api').default;
 var Message = require('telegram-api/types/Message');
@@ -121,6 +122,19 @@ bot.get('/guests', function(message) {
 bot.get('/id', function(message) {
     console.log('id: ', message.chat.id);
     sendMessage(message.chat.id, 'id: ' + message.chat.id );
+});
+
+
+
+/* GET reiniciar bot. */
+router.get('/api/plans', function(req, res) {
+    try {
+        var plan = path.join(__dirname, '../public/', 'tablerrr', 'sitting.json'); 
+        res.sendFile(plan);
+    } catch (e) {
+        console.error(e)
+        res.status(500).end();
+    }
 });
 
 
