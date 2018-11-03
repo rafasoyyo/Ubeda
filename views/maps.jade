@@ -364,6 +364,14 @@ block scripts
                                 .text(res.formatted_address)
 
                     $placeInfo.show()
+                    gtag('event', 'Place interest', res.name);
+                    gtag('event', 'Place visit', {
+                        'page' : '#{page.name}',
+                        'place': res.name,
+                        'event_callback': function(e) {
+                            console.log(e);
+                        }
+                    });
                 } else {
                     console.error('Place not found: ', data);
                 }

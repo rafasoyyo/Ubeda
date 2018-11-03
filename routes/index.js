@@ -32,7 +32,7 @@ var places = {
 
 
 /*
-        TELEGRAM BOT 
+        TELEGRAM BOT
 */
 
 /* Sent BOT message */
@@ -79,12 +79,12 @@ bot.get('/guests', function(message) {
 
 
 /*
-        EXPRESS 
+        EXPRESS
 */
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express', page: { name: 'home' } });
 });
 
 /* GET maps page. */
@@ -95,17 +95,19 @@ router.get('/sitios/:sitio', function(req, res, next) {
                 err: { status: err.id, stack: err.toString }
             });
         } else {
+            var pageName = places[req.params.sitio].title;
             res.render('maps', {
-                title: places[req.params.sitio].title,
-                places: results
+                title: pageName,
+                page: { name: pageName },
+                places: results,
             });
-        }   
+        }
     });
 });
 
 /* GET invitados page. */
 router.get('/invitado', function(req, res, next) {
-    res.render('nuevo_invitado', { title: 'Invitados' });
+    res.render('nuevo_invitado', { title: 'Invitados', page: { name: 'home' } });
 });
 
 /* POST invitados page. */
