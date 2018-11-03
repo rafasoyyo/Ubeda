@@ -12,6 +12,11 @@ html
 
         block head
 
+        script.
+            if( location.host != 'localhost' && location.protocol != 'https' ){
+                window.location.href = 'https://mariayrafael.family';
+            }
+
     body
         block content
         block scripts
