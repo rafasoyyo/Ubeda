@@ -84,7 +84,11 @@ bot.get('/guests', function(message) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express', page: { name: 'home' } });
+    res.render('index', { 
+        title: 'Express', 
+        now: new Date().toISOString(), 
+        page: { name: 'home' } 
+    });
 });
 
 /* GET maps page. */
@@ -98,6 +102,7 @@ router.get('/sitios/:sitio', function(req, res, next) {
             var pageName = places[req.params.sitio].title;
             res.render('maps', {
                 title: pageName,
+                now: new Date().toISOString(),
                 page: { name: pageName },
                 places: results,
             });
@@ -107,7 +112,11 @@ router.get('/sitios/:sitio', function(req, res, next) {
 
 /* GET invitados page. */
 router.get('/invitado', function(req, res, next) {
-    res.render('nuevo_invitado', { title: 'Invitados', page: { name: 'home' } });
+    res.render('nuevo_invitado', { 
+        title: 'Invitados',  
+        now: new Date().toISOString(), 
+        page: { name: 'home' } 
+    });
 });
 
 /* POST invitados page. */
@@ -119,14 +128,23 @@ router.post('/invitado', function(req, res, next) {
         // María - 7833074, Rafael - 29399890
         sendMessage(7833074, 'Nuevo invitado registrado: ' + result.nombre );
         sendMessage(29399890, 'Nuevo invitado registrado: ' + result.nombre );
-        res.render('nuevo_invitado', { title: 'Invitados', error: error, invitado: req.body.nombre });
+        res.render('nuevo_invitado', { 
+            title: 'Invitados',  
+            now: new Date().toISOString(),
+            error: error, 
+            invitado: req.body.nombre 
+        });
     })
 });
 
 /* GET lista invitados page. */
 router.get('/guests', function(req, res, next) {
     Invitados.find({ }, function(err, result){
-        res.render('lista_invitados', { title: 'Invitados', invitados: result });
+        res.render('lista_invitados', { 
+            title: 'Invitados', 
+            now: new Date().toISOString(),
+            invitados: result 
+        });
     });
 });
 
