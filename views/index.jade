@@ -44,8 +44,88 @@ block head
             text-decoration: none;
         }
 
-        #places {
 
+        #placeInfo {
+            max-width: calc(100% - 80px);
+            width: 800px;
+            height: calc(100vh - 20px);
+            top: 10px;
+            left: 40px;
+            margin: 0 auto;
+            display: block;
+            padding: 0;
+            z-index: 10;
+            position: fixed;
+            background-color: white;
+            box-shadow: 0 0 10px 1px grey;
+            overflow: scroll;
+            color: #607D8B;
+        }
+
+        #placeInfo .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 15px 20px;
+            font-size: 20px;
+        }
+
+        #placeInfo .box {
+            padding: 50px 175px;
+        }
+
+        #placeInfo .box > div{
+            padding: 5px 0px;
+        }
+
+        @media only screen and (max-width: 800px) {
+            #placeInfo {
+                max-width: calc(100% - 20px);
+                left: 10px;
+            }
+
+            #placeInfo .box {
+                padding: 35px 5px;
+            }
+        }
+        
+        #placeInfo .text-left {
+            text-align: left;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        #placeInfo .text-right {
+            text-align: right;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        #placeInfo .img {
+            margin: 0 5px;
+        }
+
+        #placeInfo .img img {
+            width: 80px;
+            height: initial;
+        }
+
+        #placeInfo .txt {
+            padding: 0 5px;
+            width: calc(100% - 91px);
+        }
+        
+        #placeInfo .txt p {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 0;    
+            line-height: 24px;
+        }
+
+        #placeInfo .txt span{
+            font-size: 18px;
+            display: block;    
+            line-height: 18px;
         }
 
         #places .card-box {
@@ -101,6 +181,17 @@ block head
             margin: 0;
             color: white;
         }
+    script.
+        var showInfo, hideInfo;
+        window.onload = function(){
+            placeInfo = document.getElementById('placeInfo');
+            showInfo = function(){
+                placeInfo.style.display = 'block';
+            }
+            hideInfo= function() {
+                placeInfo.style.display = 'none';
+            }
+        }
 
 block content
 
@@ -110,6 +201,51 @@ block content
             p.font en nuestro día del
             h1.font  "Sí quiero"
 
+    #placeInfo(style="display: none")
+        .close.fa.fa-times(onclick="hideInfo()")
+        .box
+            div
+                .text-right.txt
+                    p.font Recepción de bienvenida
+                    span.font Hotel Las Casas del Consul 
+                    span.font Viernes 17, 21:00h
+                .text-right.img
+                    img(src="/images/dia_consul.png")
+            div
+                .text-left.img
+                    img(src="/images/dia_salvador.png")
+                .text-left.txt
+                    p.font Ceremonia 
+                    span.font Sacra Capilla del Salvador
+                    span.font Sábado 18, 13:00h
+            div
+                .text-right.txt
+                    p.font Autobús de ida
+                    span.font Caserio del Dean de Úbeda
+                    span.font Sábado 18, 14:00h
+                .text-right.img
+                    img(src="/images/dia_bus.png")
+            div
+                .text-left.img
+                    img(src="/images/dia_combite.png")
+                .text-left.txt
+                    p.font Celebración y convite 
+                    span.font Caserio del Dean de Úbeda
+            div
+                .text-right.txt
+                    p.font Autobús de vuelta 
+                    span.font Plaza del ayuntamiento
+                    span.font A partir de las 20:00h
+                .text-right.img
+                    img(src="/images/dia_bus.png")
+            div
+                .text-left.img
+                    img(src="/images/dia_cerros.png")
+                .text-left.txt
+                    p.font Visita turística 
+                    span.font Conoce Úbeda con nosotros
+                    span.font Domingo 19, 11:00h
+
     #places.page
 
         #asistencia
@@ -118,6 +254,8 @@ block content
             p.font.unmar Capilla del Salvador, Úbeda
             //- div.block.text-center
                 //- a.font(href="/invitado") Confirma tu asistencia
+            div.block.text-center
+                a.font(onclick="showInfo()") Los detalles
 
         a.card-box(href="/sitios/LosLugares")
             .card-image.background(style="background-image: url('../images/elsalvador.jpg');")
