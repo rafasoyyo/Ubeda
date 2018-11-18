@@ -15,24 +15,18 @@ block head
 
         #placeInfo {
             max-width: calc(100vw - 20px);
-            width: 800px;
+            width: 780px;
             height: calc(100vh - 20px);
             top: 10px;
-            margin: 0 auto;
+            margin: 0 10px;
             display: block;
             padding: 0;
             z-index: 10;
             position: fixed;
             background-color: white;
             box-shadow: 0 0 10px 1px grey;
-            overflow: scroll;
+            overflow-x: auto;
             color: #607D8B;
-        }
-
-        @media only screen and (max-width: 800px) {
-            #placeInfo {
-                left: 10px;
-            }
         }
 
         #placeInfo .close {
@@ -87,22 +81,20 @@ block head
         }
 
         #places {
-            //- margin: 10px 10px 10px 0;
-            //- height: 195px;
-            margin: 10px 10px 0px 10px;
-            height: 29vh;
-            overflow-y: visible;
+            height: calc(30vh - 5px);
             box-sizing: border-box;
             overflow-x: scroll;
+            overflow-y: hidden;
+            margin: 5px 5px 0px 5px;
             -webkit-overflow-scrolling: touch;
         }
 
         #places .scroll-places {
-            height: inherit;
+            height: calc(100% - 5px);
         }
 
         .place {
-            height: calc(99% - 10px);
+            height: 100%;
             width: 61vw;
             max-width: 300px;
             min-width: 240px;
@@ -141,7 +133,8 @@ block head
         }
 
         .place-background {
-            height: 59%;
+            height: 60%;    
+            max-height: calc(100% - 70px);
         }
 
 block content

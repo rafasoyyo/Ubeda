@@ -46,19 +46,18 @@ block head
 
 
         #placeInfo {
-            max-width: calc(100% - 80px);
-            width: 800px;
+            max-width: calc(100% - 20px);
+            width: 780px;
             height: calc(100vh - 20px);
             top: 10px;
-            left: 40px;
-            margin: 0 auto;
+            margin: 0 10px;
             display: block;
             padding: 0;
             z-index: 10;
             position: fixed;
             background-color: white;
             box-shadow: 0 0 10px 1px grey;
-            overflow: scroll;
+            overflow-x: auto;
             color: #607D8B;
         }
 
@@ -79,10 +78,10 @@ block head
         }
 
         @media only screen and (max-width: 800px) {
-            #placeInfo {
-                max-width: calc(100% - 20px);
-                left: 10px;
-            }
+            //- #placeInfo {
+            //-     max-width: calc(100% - 20px);
+            //-     left: 10px;
+            //- }
 
             #placeInfo .box {
                 padding: 35px 5px;
