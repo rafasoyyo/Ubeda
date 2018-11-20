@@ -67,10 +67,10 @@ block head
 
         #placeInfo .background {
             content: '';
-            opacity: .15;
+            opacity: .1;
             background-image: url("/images/novios.jpg");
-            background-size: 100%;
-            background-position: right top;
+            background-size: 100% 105%;
+            background-position: right bottom;
             background-repeat: no-repeat;    
             position: absolute;
             top: 0;
@@ -94,7 +94,7 @@ block head
 
         #placeInfo .box > div{
             padding: 5px 0px;   
-            height: calc((100vh - 75px) / 6);
+            min-height: calc((100vh - 120px) / 6);
         }
 
         @media only screen and (max-width: 800px) {
