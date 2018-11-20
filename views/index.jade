@@ -65,6 +65,21 @@ block head
             color: #607D8B;
         }
 
+        #placeInfo .background {
+            content: '';
+            opacity: .15;
+            background-image: url("/images/novios.jpg");
+            background-size: 100%;
+            background-position: right top;
+            background-repeat: no-repeat;    
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
         #placeInfo .close {
             position: absolute;
             top: 0;
@@ -227,6 +242,7 @@ block content
 
     #placeInfo(style="display: none")
         .close.fa.fa-times(onclick="hideInfo()")
+        .background
         .box
             div
                 .text-right.txt
