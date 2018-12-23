@@ -174,21 +174,13 @@ block head
         }
 
         #places .card-text .text {
-            padding: 4vh 0vw 0vw 4vw;
+            //- padding: 4vh 0vw 0vw 4vw;
+            padding-top: 4vh;
             font-size: 16px;
             line-height: 20px;
-        }
-
-        @media only screen and (min-width: 321px) {
-            #places .card-text .text {
-                padding: 4vh 0vw 0vw 8vw;
-            }
-        }
-
-        @media only screen and (min-width: 800px) {
-            #places .card-text .text {
-                padding: 3vh 0vw 0vw 18vw;
-            }
+            width: 125px;
+            display: block;
+            margin: 0 auto;
         }
 
         #places .card-text .text p {    
@@ -293,12 +285,15 @@ block content
             p.font.unmar Recuerda:
             p.font.unmar 18 de Mayo 2019, 13:00h
             p.font.unmar Capilla del Salvador, Úbeda
-            //- div.block.text-center
-                //- a.font(href="/invitado") Confirma tu asistencia
             div.block.text-center
                 a.font(onclick="showInfo()") Los detalles
+            div.block.text-center
+                a.font(href="/invitado") 
+                    span Confirma tu asistencia 
+                    span(style="font-family: sans-serif") ;)
+                    //- img(src="/images/emoji.png" style="width: 40px; height: initial; padding-left: 10px; vertical-align: bottom;")
 
-        a.card-box(href="/sitios/LosLugares" style=" background-color: rgba(34, 139, 187, .35); color: rgba(34, 139, 187, 1)")
+        a.card-box(href="/sitios/LosLugares" style="background-color: rgba(34, 139, 187, .35); color: rgba(34, 139, 187, 1)")
             .card-text
                 .text.font
                     p Los Lugares 
