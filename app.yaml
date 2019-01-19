@@ -13,5 +13,6 @@
 # limitations under the License.
 
 # [START app_yaml]
-runtime: nodejs10
+runtime: nodejs
+vm: true
 # [END app_yaml]
