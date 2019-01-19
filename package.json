@@ -6,6 +6,9 @@
     "dev": "nodemon -e jade,js  --inspect ./bin/www",
     "start": "node ./bin/www"
   },
+  "engine": {
+    "node" : "8.10.0"
+  },
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
