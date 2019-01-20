@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/.well-known/acme-challenge/', require('./routes/letsencrypt.js'));
+app.use('/.well-known/acme-challenge/', require('./routes/letsencrypt'));
 app.use('/', require('./routes/index'));
 
 

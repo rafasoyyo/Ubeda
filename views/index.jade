@@ -27,7 +27,7 @@ block head
         }
 
         #asistencia {
-            padding: 20px 25px; 
+            padding: 20px 25px;
             font-size: 24px;
         }
 
@@ -39,6 +39,7 @@ block head
             color: rgba(0, 0, 0, .75);
         }
 
+        #notification > div a,
         #asistencia > div a{
             border: 1px;
             padding: 5px 15px;
@@ -48,6 +49,25 @@ block head
             text-decoration: none;
         }
 
+        #notification {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: -110%;
+            height: 60px;
+            padding-top: 5%;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, .75);
+            transition: bottom 1s ease;
+
+        }
+        #notification.showed {
+            bottom: 0;
+            transition: bottom 1s ease;
+        }
+        #notification.showed > div a {
+            font-size: 20px;
+        }
 
         #placeInfo {
             max-width: calc(100% - 20px);
@@ -71,7 +91,7 @@ block head
             background-image: url("/images/novios.jpg");
             background-size: 100% 105%;
             background-position: right bottom;
-            background-repeat: no-repeat;    
+            background-repeat: no-repeat;
             position: absolute;
             top: 0;
             left: 0;
@@ -93,7 +113,7 @@ block head
         }
 
         #placeInfo .box > div{
-            padding: 5px 0px;   
+            padding: 5px 0px;
             min-height: calc((100vh - 120px) / 6);
         }
 
@@ -107,7 +127,7 @@ block head
                 padding: 50px 5px 0;
             }
         }
-        
+
         #placeInfo .text-left {
             text-align: left;
             display: inline-block;
@@ -133,17 +153,17 @@ block head
             padding: 0 5px;
             width: calc(100% - 91px);
         }
-        
+
         #placeInfo .txt p {
             font-size: 26px;
             font-weight: bold;
-            margin: 0;    
+            margin: 0;
             line-height: 27px;
         }
 
         #placeInfo .txt span{
             font-size: 20px;
-            display: block;    
+            display: block;
             line-height: 21px;
         }
 
@@ -183,7 +203,7 @@ block head
             margin: 0 auto;
         }
 
-        #places .card-text .text p {    
+        #places .card-text .text p {
             margin: 0px;
             padding: 0;
             color: rgba(0, 0, 0, .65);
@@ -213,16 +233,38 @@ block head
             margin: 0;
             color: white;
         }
+
     script.
-        var showInfo, hideInfo;
+        var showInfo, hideInfo, showNotification;
         window.onload = function(){
-            placeInfo = document.getElementById('placeInfo');
+            var placeInfo = document.getElementById('placeInfo');
             showInfo = function(){
                 placeInfo.style.display = 'block';
             }
             hideInfo= function() {
                 placeInfo.style.display = 'none';
             }
+
+
+            var height = window.innerHeight;
+            var notification = document.getElementById('notification');
+            showNotification = function() {
+                var top = (window.pageYOffset || document.scrollTop)  - (document.clientTop || 0);
+                if(!isNaN(top) && top > height/4) {
+                    console.log('true: ', height);
+                    notification.classList.add('showed');
+                    window.removeEventListener('mousewheel', showNotification);
+                    window.removeEventListener('touchmove', showNotification);
+                    window.removeEventListener('DOMMouseScroll', showNotification);
+                }
+                return false;
+            }
+            hideNotification = function() {
+                notification.style.display = 'none';
+            }
+            window.addEventListener('mousewheel', showNotification);
+            window.addEventListener('touchmove', showNotification);
+            window.addEventListener('DOMMouseScroll', showNotification);
         }
 
 block content
@@ -240,7 +282,7 @@ block content
             div
                 .text-right.txt
                     p.font Recepción de bienvenida
-                    span.font Hotel Las Casas del Consul 
+                    span.font Hotel Las Casas del Consul
                     span.font Viernes 17, 21:00h
                 .text-right.img
                     img(src="/images/dia_consul.png")
@@ -248,7 +290,7 @@ block content
                 .text-left.img
                     img(src="/images/dia_salvador.png")
                 .text-left.txt
-                    p.font Ceremonia 
+                    p.font Ceremonia
                     span.font Sacra Capilla del Salvador
                     span.font Sábado 18, 13:00h
             div
@@ -262,11 +304,11 @@ block content
                 .text-left.img
                     img(src="/images/dia_combite.png")
                 .text-left.txt
-                    p.font Celebración y convite 
+                    p.font Celebración y convite
                     span.font Caserio del Dean de Úbeda
             div
                 .text-right.txt
-                    p.font Autobús de vuelta 
+                    p.font Autobús de vuelta
                     span.font A la Plaza del ayuntamiento
                     span.font A partir de las 20:00h
                 .text-right.img
@@ -275,28 +317,31 @@ block content
                 .text-left.img
                     img(src="/images/dia_cerros.png")
                 .text-left.txt
-                    p.font Visita turística 
+                    p.font Visita turística
                     span.font Conoce Úbeda con nosotros
                     span.font Domingo 19, 11:00h
 
-    #places.page
 
+    #notification
+        div.block.text-center
+            a.font(href="/invitado")
+                span Confirma tu asistencia
+                span(style="font-family: sans-serif; padding-left: 5px") ;)
+            i.fa.fa-2x.fa-times-circle(onclick="hideNotification()" style="padding: 0 15px; color: grey; vertical-align: middle;")
+
+
+    #places.page
         #asistencia(style=" background-color: beige;")
             p.font.unmar Recuerda:
             p.font.unmar 18 de Mayo 2019, 13:00h
             p.font.unmar Capilla del Salvador, Úbeda
             div.block.text-center
                 a.font(onclick="showInfo()") Los detalles
-            div.block.text-center
-                a.font(href="/invitado") 
-                    span Confirma tu asistencia 
-                    span(style="font-family: sans-serif") ;)
-                    //- img(src="/images/emoji.png" style="width: 40px; height: initial; padding-left: 10px; vertical-align: bottom;")
 
         a.card-box(href="/sitios/LosLugares" style="background-color: rgba(34, 139, 187, .35); color: rgba(34, 139, 187, 1)")
             .card-text
                 .text.font
-                    p Los Lugares 
+                    p Los Lugares
                     p de la boda
                 .link
                     span Ver más
@@ -306,7 +351,7 @@ block content
             .card-image.background(style="background-image: url('../images/turisteo.jpeg');")
             .card-text
                 .text
-                    p Monumentos 
+                    p Monumentos
                     p y visitas
                 .link
                     span Ver más
@@ -314,7 +359,7 @@ block content
         a.card-box(href="/sitios/PaDormir" style=" background-color: rgba(41, 179, 165, .35); color: rgba(41, 179, 165, 1)")
             .card-text
                 .text
-                    p Hoteles y 
+                    p Hoteles y
                     p Hospedajes
                 .link
                     span Ver más
@@ -324,7 +369,7 @@ block content
             .card-image.background(style="background-image: url('../images/canatapa.jpg');")
             .card-text
                 .text
-                    p Cañas, tapas 
+                    p Cañas, tapas
                     p y compras
                 .link
                     span Ver más
@@ -339,9 +384,9 @@ block content
 
     #video(style="padding: 5px")
         //- p Porqué Úbeda
-        iframe(style="width: 100%; height: initial;" src="https://www.youtube.com/embed/pqu3RGo0pSM" frameborder="0" 
-        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)   
-        
+        iframe(style="width: 100%; height: initial;" src="https://www.youtube.com/embed/pqu3RGo0pSM" frameborder="0"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+
     footer#footer(style="line-height: 18px")
         p No dudes de que tendrás tu invitación con toda la información necesaria, pero hemos pensado que tenerla accesible puede resultar de ayuda.
 
