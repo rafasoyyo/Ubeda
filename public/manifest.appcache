@@ -1,0 +1,25 @@
+CACHE MANIFEST
+# v1 - 22/01/2019
+
+CACHE:
+/images/canatapa.jpg
+/images/consul.jpg
+/images/default.jpg
+/images/dia_bus.png
+/images/dia_cerros.png
+/images/dia_combite.png
+/images/dia_consul.png
+/images/dia_salvador.png
+/images/eldean.jpg
+/images/elsalvador.jpg
+/images/finguers.jpg
+/images/madagascar.jpg
+/images/novios.jpg
+/images/nosotros.png
+/images/turisteo.jpeg
+
+NETWORK:
+*
+
+FALLBACK:
+*
