@@ -133,7 +133,7 @@ block head
         }
 
         .place-background {
-            height: 60%;    
+            height: 60%;
             max-height: calc(100% - 70px);
         }
 
@@ -402,12 +402,13 @@ block scripts
         function gps(){
             if(geolocation) {
                 navigator.geolocation.clearWatch(geolocation);
-                myMarker.setMap(null);
-                myAccuracy.setMap(null);
+                if (myMarker) { myMarker.setMap(null); }
+                if (myAccuracy) { myAccuracy.setMap(null); }
                 isLocated = false;
             }
             geolocation = navigator.geolocation.watchPosition(function(position){
                 var myPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                console.log('Position: ', myPos);
                 if (!isLocated) {
                     map.panTo(myPos);
                     myMarker = new google.maps.Marker({
@@ -438,6 +439,7 @@ block scripts
                     myMarker.setPosition(myPos);
                 }
             }, function(err){
+                console.error('Error: ', err)
                 alert( 'Ups! parece que algo no va bien... ', err.code , ' - ' , err.message );
             }, { timeout: 5000 });
         }
