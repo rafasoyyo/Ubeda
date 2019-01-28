@@ -72,6 +72,33 @@ block head
             margin: 0;
         }
 
+        #copyNumber{
+            color: #607d8b;
+            border: none;
+            outline:none;
+            font-size: 15px;
+            font-weight: bold;
+            min-width: 225px;
+            text-align: center;"
+        }
+
+        #copyBtn {
+            font-size: 14px;
+            margin: 0 10px;
+            color: #607d8b;
+            background-color: transparent;
+            border: 1px solid #607d8b;
+            outline: none;
+            box-shadow: 0px 0px 3px 0px #607d8b;
+            padding: 3px 7px;
+        }
+
+        #copyBtn.active {
+            box-shadow: 0px 0px 1px 0px #a54f4f;
+            border: 1px solid #a54f4f;
+            color: #a54f4f;
+        }
+
 block content
 
     header#header
@@ -118,6 +145,27 @@ block content
             h2.t-title Qué lo disfrutéis!!!
             p.t-full(style="padding-bottom: 10px;") Deseamos que nos acompañes en nuestra boda y que disfrutes al máximo con nosotros en Úbeda.
             p.t-full(style="padding-bottom: 10px;") Si además quieres ayudarnos a disfrutar de nuestra luna de miel en Madagascar, puedes hacerlo en este número:
-            p(style="text-align: center; padding-bottom: 10px; font-size: 16px;") ES86 1465 0300 66 2047714124
-            em(style="text-align: left") Prometemos mandarte una foto de todas formas ;D
-            img(src="/images/nosotros.png" style="display: block; margin: 10px auto; padding-bottom: 10px; width: 50%")
+            div(style="text-align: center; padding-bottom: 10px;")
+                input#copyNumber(value="ES86 1465 03 00662047714124" readonly)
+                button#copyBtn(onclick="copyNumber()")
+                    span Copiar
+                    i.fa.fa-copy(style="padding-left: 5px;")
+            div
+                em(style="text-align: left") Prometemos mandarte una foto de todas formas ;D
+                img(src="/images/nosotros.png" style="display: block; margin: 10px auto; padding-bottom: 10px; width: 50%")
+    script.
+        function copyNumber() {
+
+            var copyText = document.getElementById('copyNumber');
+            copyText.select();
+            document.execCommand("copy");
+
+            feedBtn = document.querySelector("#copyBtn");
+            feedBtn.classList.add('active');
+            feedText = feedBtn.querySelector("span");
+            feedText.innerHTML = "Copiado";
+            setTimeout(function(){
+                feedBtn.classList.remove('active');
+                feedText.innerHTML = "Copiar";
+            }, 1500);
+        }

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon -e jade,js  --inspect ./bin/www",
-    "start": "node ./bin/www"
+    "dev": "set NODE_ENV=develop&& nodemon -e jade,js  --inspect ./bin/www",
+    "start": "set NODE_ENV=production&& node ./bin/www"
   },
   "engine": {
     "node" : "10.15.0"

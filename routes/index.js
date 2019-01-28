@@ -3,6 +3,8 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 
+var env = process.env.NODE_ENV;
+
 var Bot = require('telegram-api').default;
 var Message = require('telegram-api/types/Message');
 var bot = new Bot({ token: '654952867:AAFnJPiqAq463C2QLGUSknP_vEoHlA60ap8' });
@@ -87,16 +89,19 @@ router.get('/', function(req, res, next) {
     res.render('index', {
         title: 'Express',
         now: new Date().toISOString(),
-        page: { name: 'home' }
+        page: { name: 'home' },
+        env: env
     });
 });
 
 /* GET home page. */
 router.get('/lunademiel', function(req, res, next) {
+    console.log(env);
     res.render('lunademiel', {
         title: 'Luna de Miel',
         now: new Date().toISOString(),
-        page: { name: 'lunademiel' }
+        page: { name: 'lunademiel' },
+        env: env
     });
 });
 
@@ -114,6 +119,7 @@ router.get('/sitios/:sitio', function(req, res, next) {
                 now: new Date().toISOString(),
                 page: { name: pageName },
                 places: results,
+                env: env
             });
         }
     });
@@ -124,7 +130,8 @@ router.get('/invitado', function(req, res, next) {
     res.render('nuevo_invitado', {
         title: 'Invitados',
         now: new Date().toISOString(),
-        page: { name: 'home' }
+        page: { name: 'home' },
+        env: env
     });
 });
 
@@ -141,7 +148,8 @@ router.post('/invitado', function(req, res, next) {
             title: 'Invitados',
             now: new Date().toISOString(),
             error: error,
-            invitado: req.body.nombre
+            invitado: req.body.nombre,
+            env: env
         });
     })
 });
@@ -152,7 +160,8 @@ router.get('/guests', function(req, res, next) {
         res.render('lista_invitados', {
             title: 'Invitados',
             now: new Date().toISOString(),
-            invitados: result
+            invitados: result,
+            env: env
         });
     });
 });
