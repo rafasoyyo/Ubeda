@@ -5,7 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://ubeda:ubeda2018@ds125502.mlab.com:25502/ubeda', { useNewUrlParser: true });
+mongo = mongoose.connect('mongodb://ubeda:ubeda2018@ds125502.mlab.com:25502/ubeda', { useNewUrlParser: true })
+  .then(
+    (res) => { console.log('DB Connected') },
+    (err) => { console.error('DB NOT Connected') }
+  );
 
 var app = express();
 

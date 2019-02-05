@@ -90,7 +90,8 @@ router.get('/', function(req, res, next) {
         title: 'Express',
         now: new Date().toISOString(),
         page: { name: 'home' },
-        env: env
+        env: env,
+        manifest: true
     });
 });
 
@@ -101,7 +102,8 @@ router.get('/lunademiel', function(req, res, next) {
         title: 'Luna de Miel',
         now: new Date().toISOString(),
         page: { name: 'lunademiel' },
-        env: env
+        env: env,
+        manifest: true
     });
 });
 
@@ -119,7 +121,8 @@ router.get('/sitios/:sitio', function(req, res, next) {
                 now: new Date().toISOString(),
                 page: { name: pageName },
                 places: results,
-                env: env
+                env: env,
+                manifest: true
             });
         }
     });
@@ -131,7 +134,8 @@ router.get('/invitado', function(req, res, next) {
         title: 'Invitados',
         now: new Date().toISOString(),
         page: { name: 'home' },
-        env: env
+        env: env,
+        manifest: true
     });
 });
 
@@ -149,7 +153,8 @@ router.post('/invitado', function(req, res, next) {
             now: new Date().toISOString(),
             error: error,
             invitado: req.body.nombre,
-            env: env
+            env: env,
+            manifest: true
         });
     })
 });
@@ -161,7 +166,8 @@ router.get('/guests', function(req, res, next) {
             title: 'Invitados',
             now: new Date().toISOString(),
             invitados: result,
-            env: env
+            env: env,
+            manifest: false
         });
     });
 });
