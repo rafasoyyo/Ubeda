@@ -33,11 +33,11 @@ var express = require('express');
 var router = require('express').Router();
 
 //set constants for encryption from letsencrypt command
-var letsEncryptPath = 'C0MVtbGYj3bO0AS2RZHQz4CJLjGECnYztrrViMtAoY4';
-var letsEncryptData = 'C0MVtbGYj3bO0AS2RZHQz4CJLjGECnYztrrViMtAoY4.ya9Lcbxaw2HYXHvexClcXLPiiLr1P6HhHVk48Gioyxc';
+var letsEncryptPath = 'mU8pR5qmdzhDQvXw4Ohf_iNaml5PsnjfscxozEHBffw';
+var letsEncryptData = 'mU8pR5qmdzhDQvXw4Ohf_iNaml5PsnjfscxozEHBffw.u3zJyTvVcZ7K-LeTy1n6KvAdntlJDoX3s8hU0myFm00';
 
-var wwwletsEncryptPath = 'C0MVtbGYj3bO0AS2RZHQz4CJLjGECnYztrrViMtAoY4';
-var wwwletsEncryptData = 'C0MVtbGYj3bO0AS2RZHQz4CJLjGECnYztrrViMtAoY4.ya9Lcbxaw2HYXHvexClcXLPiiLr1P6HhHVk48Gioyxc';
+var wwwletsEncryptPath = 'mU8pR5qmdzhDQvXw4Ohf_iNaml5PsnjfscxozEHBffw';
+var wwwletsEncryptData = 'mU8pR5qmdzhDQvXw4Ohf_iNaml5PsnjfscxozEHBffw.u3zJyTvVcZ7K-LeTy1n6KvAdntlJDoX3s8hU0myFm00';
 
 //make router path for letsencrypt
 router.get(`/${letsEncryptPath}`, (req, res) => {
