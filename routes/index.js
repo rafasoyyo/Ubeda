@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -15,7 +14,6 @@ var LosLugares = Lugares.LosLugares;
 var DeTuristeo = Lugares.DeTuristeo;
 var PaDormir = Lugares.PaDormir;
 var DeTapas = Lugares.DeTapas;
-
 
 var places = {
     LosLugares: {
@@ -77,7 +75,6 @@ bot.get('/guests', function(message) {
         sendMessage(message.chat.id, 'Not allowed' );
     }
 });
-
 
 
 /*
@@ -161,14 +158,18 @@ router.post('/invitado', function(req, res, next) {
 
 /* GET lista invitados page. */
 router.get('/guests', function(req, res, next) {
-    Invitados.find({ }, function(err, result){
-        res.render('lista_invitados', {
-            title: 'Invitados',
-            now: new Date().toISOString(),
-            invitados: result,
-            env: env,
-            manifest: false
-        });
+    Invitados
+        .find()
+        // .sort({'nombre': 1})
+        .exec(function(err, result){
+            console.error(err)
+            res.render('lista_invitados', {
+                title: 'Invitados',
+                now: new Date().toISOString(),
+                invitados: result,
+                env: env,
+                manifest: false
+            });
     });
 });
 

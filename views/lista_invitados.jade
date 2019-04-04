@@ -71,7 +71,7 @@ block content
 
             div(style="margin-top: 10px")
                 span(style="width: 24%") Filtro:
-                input.filtro(type="text" style="margin: 0 10px; width: 50%" onchange="filtrarInvitados(this)")
+                input.filtro(type="text" style="margin: 0 10px; width: 50%")
                 i.fa.fa-search(style="margin: 0 10px; font-size: 18px")
 
         div#table_box
@@ -99,53 +99,74 @@ block content
                             td=  invitado.comentarios
 
     script.
-        var filtrarInvitados;
 
-        window.onload = function () {
-            var rows = document.querySelectorAll('table tbody tr');
-
-            (function() {
-                var total = 0;
-                var totalAdultos = 0;
-                var totalNinos = 0;
-
-                rows.forEach(function(element){
-                    var adultos = element.querySelector('.adultos');
-                    if (adultos) {
-                        var a = Number( adultos.textContent );
-                        totalAdultos += isNaN(a) ? 0 : Number(a);
-                    }
-
-                    var ninos = element.querySelector('.ninos');
-                    if (ninos) {
-                        var n = Number( ninos.textContent );
-                        totalNinos += isNaN(n) ? 0 : Number(n);
-                    }
-                });
-                document.querySelector('.totalAdultos').textContent = totalAdultos;
-                document.querySelector('.totalNinos').textContent = totalNinos;
-                document.querySelector('.total').textContent = totalAdultos + totalNinos;
-            })();
-
-            filtrarInvitados = function (that) {
-                var name, match;
-                var value = that.value;
-                var query = null;
-                if (value) { query = new RegExp(value, 'i'); }
-                rows.forEach(function(element){
-                    if (query) {
-                        name = element.querySelector('.name');
-                        match = query.test(name.textContent);
-                        console.log(match, query, name.textContent);
-                        if (match){
-                            element.style.display = "table-row";
-                        } else {
-                            element.style.display = "none";
-                        }
-                    } else {
-                        element.style.display = "table-row";
-                    }
-                });
-            }
-
+        var invert = false;
+        var ordenarInvitados = function (table, rows, index) {
+            var atext, btext, isTrue;
+            rows.sort(function(a, b) {
+                atext = $(a).children().eq(index);
+                btext = $(b).children().eq(index);
+                isTrue = ($(atext).text() > $(btext).text());
+                return ( isTrue ? (invert ? -1 : 1) : (invert ? 1 : -1) );
+            });
+            invert = !invert;
+            table.find('tbody').html(rows);
         }
+
+        var $totalAdultos , $totalNinos , $total;
+        var filtrarInvitados = function (table, rows, filter) {
+            var display, name, match, row, ad, adultos, ni, ninos;
+            var total = 0, totalAdultos = 0, totalNinos = 0;
+            var query = (filter && filter.length) ? new RegExp(filter, 'i') : null;
+
+            rows.each(function(index, row) {
+                row = $(row);
+
+                if (query) {
+                    name = $(this).find('.name');
+                    match = query.test(name.text());
+                    display = match ? 'table-row' : 'none';
+                } else {
+                    match = true;
+                    display = 'table-row';
+                }
+                row.css('display', display);
+
+                adultos = row.find('.adultos');
+                if (adultos && match) {
+                    ad = Number( adultos.text() );
+                    totalAdultos += isNaN(ad) ? 0 : Number(ad);
+                }
+
+                ninos = row.find('.ninos');
+                if (ninos && match) {
+                    ni = Number( ninos.text() );
+                    totalNinos += isNaN(ni) ? 0 : Number(ni);
+                }
+            });
+
+            $totalAdultos.text(totalAdultos);
+            $totalNinos.text(totalNinos);
+            $total.text(totalAdultos + totalNinos);
+            return;
+        }
+
+        $(document).ready(function () {
+            var table = $('#table_box table');
+            var head = table.find('th');
+            var rows = table.find('tbody tr');
+
+            $totalAdultos = $('.totalAdultos');
+            $totalNinos = $('.totalNinos');
+            $total = $('.total');
+
+            head.click(function(evt) {
+                ordenarInvitados(table, rows, $(this).index());
+            });
+
+            $('input.filtro').change(function(){
+                filtrarInvitados(table, rows, $(this).val());
+            });
+            filtrarInvitados(table, rows);
+
+        });

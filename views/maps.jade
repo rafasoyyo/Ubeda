@@ -384,7 +384,7 @@ block scripts
             var place = placesInfo[placeid];
             var item = $places.find('#' + placeid);
             if (item) {
-                $places.animate({ scrollLeft: $places.scrollLeft() + item.offset().left - 15 }, 500);
+                $places.animate({ scrollLeft: item.offset().left - item.parent().offset().left }, 500);
             }
             map.panTo({
                 lat: place.geometry.location.lat(),
