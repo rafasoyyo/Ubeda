@@ -249,7 +249,42 @@ block scripts
             findPlace(0);
         }
 
+        function setPlaces(element, place) {
+            place = JSON.parse(place);
+            //- console.log(place)
+            var placeId = place._id;
+            placeMarker = new google.maps.Marker({
+                'icon': {
+                    'url': place.icon,
+                    'scaledSize': new google.maps.Size(25, 25),
+                },
+                'position': {
+                    lat: place.lat,
+                    lng: place.lng
+                },
+                'map': map
+            });
+            placeMarker._id = placeId;
+            placeMarker.addListener('click', function() {
+                placeFocus(this._id);
+            });
 
+            placesInfo[placeId] = place;
+            placesInfo[placeId].marker = placeMarker;
+
+            element.attr('id', placeId);
+            element.data('placeid', placeId);
+            element.find('.rating').text(place.rating);
+            if (place.photo) {
+                element.children('.place-background').css({ 'background-image': 'url(' + place.photo + ')' });
+            } else {
+                element.children('.place-background').css({ 'background-image': 'url(/images/default.jpg)' });
+            }
+            element.click(function(){
+                console.log(element, element.data(), element.data(placeId));
+                placeFocus(element.data('placeid'));
+            });
+        }
 
         //- Buscar datos de lugares
         function findPlace(i) {
@@ -259,53 +294,43 @@ block scripts
 
             var that = $(p);
             var data = that.data();
+            var identifier = data.identifier.replace(/[^a-zA-Z]/g, '');
 
-            //- Buscar lugar
-            placeService.findPlaceFromQuery({
-                query: data.identifier,
-                fields: ['place_id', 'photo', 'name', 'rating', 'opening_hours', 'geometry', 'icon']
-            }, function(res, status) {
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    res = res[0];
-                    var placeId = res.place_id;
-                    placeMarker = new google.maps.Marker({
-                        'icon': {
-                            'url': res.icon,
-                            'scaledSize': new google.maps.Size(25, 25),
-                        },
-                        'position': {
+            var today = new Date().getDate();
+            var localData = localStorage.getItem(identifier);
+            if(localData && today%4 != 0){
+                console.log(data.identifier, 'local', today, today%4 != 0);
+                setPlaces(that, localData);
+                findPlace(++i);
+            } else {
+                console.log(data.identifier, 'cloud', today, today%4 != 0);
+                placeService.findPlaceFromQuery({
+                    query: data.identifier,
+                    fields: ['place_id', 'photo', 'name', 'rating', 'opening_hours', 'geometry', 'icon']
+                }, function(res, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        res = res[0];
+                        var placeData = JSON.stringify({
+                            _id: res.place_id,
+                            name: identifier,
+                            icon: res.icon,
                             lat: res.geometry.location.lat(),
-                            lng: res.geometry.location.lng()
-                        },
-                        'map': map
-                    });
-                    placeMarker.place_id = placeId;
-                    placeMarker.addListener('click', function() {
-                        placeFocus(this.place_id);
-                    });
-
-                    placesInfo[placeId] = res;
-                    placesInfo[placeId].marker = placeMarker;
-
-                    that.attr('id', placeId);
-                    that.data('placeid', placeId);
-                    that.find('.rating').text(res.rating);
-                    if (res.photos && res.photos.length) {
-                        that.children('.place-background').css({ 'background-image': 'url(' + res.photos[0].getUrl() + ')' });
+                            lng: res.geometry.location.lng(),
+                            photo: res.photos[0].getUrl(),
+                            rating: res.rating
+                        });
+                        //- console.log(identifier, placeData);
+                        setPlaces(that, placeData);
+                        localStorage.setItem(identifier, placeData);
+                        findPlace(++i);
                     } else {
-                        that.children('.place-background').css({ 'background-image': 'url(/images/default.jpg)' });
+                        console.log('getDetails: ', identifier, status)
+                        setTimeout(function(){
+                            findPlace(i);
+                        }, 1000);
                     }
-                    that.click(function(){
-                        placeFocus(data.placeid);
-                    });
-                    findPlace(++i);
-                } else {
-                    console.log('getDetails: ', data.identifier, status)
-                    setTimeout(function(){
-                        findPlace(i);
-                    }, 1000);
-                }
-            });
+                });
+            }
         }
 
 
@@ -387,8 +412,8 @@ block scripts
                 $places.animate({ scrollLeft: $places.scrollLeft() + item.offset().left - 15 }, 500);
             }
             map.panTo({
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng()
+                lat: place.lat,
+                lng: place.lng
             });
             icon = place.marker.getIcon();
             place.marker.setIcon({
