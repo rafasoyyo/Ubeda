@@ -300,7 +300,6 @@ block scripts
             if(localData) {
                 localData = JSON.parse(localData);
                 var diffTime = new Date().getTime() - new Date(localData.time).getTime();
-                var t = diffTime < refreshTime;
                 if(diffTime < refreshTime){
                     console.log(data.identifier, 'local', localData.time, diffTime < refreshTime);
                     setPlaces(that, localData);
