@@ -195,6 +195,7 @@ block scripts
         var map, geolocation, isLocated, myMarker, myAccuracy;
         var placeService, placeMarker, placesInfo = {};
         var $places, $placeInfo;
+        var refreshTime = 86400000 * 2;
 
         //- Iniciar mapa y su configuración
         function initMap() {
@@ -250,7 +251,7 @@ block scripts
         }
 
         function setPlaces(element, place) {
-            place = JSON.parse(place);
+            place = typeof place === 'string' ? JSON.parse(place).data : place.data;
             //- console.log(place)
             var placeId = place._id;
             placeMarker = new google.maps.Marker({
@@ -295,22 +296,27 @@ block scripts
             var that = $(p);
             var data = that.data();
             var identifier = data.identifier.replace(/[^a-zA-Z]/g, '');
-
-            var today = new Date().getDate();
             var localData = localStorage.getItem(identifier);
-            if(localData && today%4 != 0){
-                console.log(data.identifier, 'local', today, today%4 != 0);
-                setPlaces(that, localData);
-                findPlace(++i);
-            } else {
-                console.log(data.identifier, 'cloud', today, today%4 != 0);
-                placeService.findPlaceFromQuery({
-                    query: data.identifier,
-                    fields: ['place_id', 'photo', 'name', 'rating', 'opening_hours', 'geometry', 'icon']
-                }, function(res, status) {
-                    if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        res = res[0];
-                        var placeData = JSON.stringify({
+            if(localData) {
+                localData = JSON.parse(localData);
+                var diffTime = new Date().getTime() - new Date(localData.time).getTime();
+                var t = diffTime < refreshTime;
+                if(diffTime < refreshTime){
+                    console.log(data.identifier, 'local', localData.time, diffTime < refreshTime);
+                    setPlaces(that, localData);
+                    return findPlace(++i);
+                }
+            }
+            placeService.findPlaceFromQuery({
+                query: data.identifier,
+                fields: ['place_id', 'photo', 'name', 'rating', 'opening_hours', 'geometry', 'icon']
+            }, function(res, status) {
+                console.log(data.identifier, 'cloud');
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    res = res[0];
+                    var placeData = JSON.stringify({
+                        time: new Date(),
+                        data: {
                             _id: res.place_id,
                             name: identifier,
                             icon: res.icon,
@@ -318,19 +324,19 @@ block scripts
                             lng: res.geometry.location.lng(),
                             photo: res.photos[0].getUrl(),
                             rating: res.rating
-                        });
-                        //- console.log(identifier, placeData);
-                        setPlaces(that, placeData);
-                        localStorage.setItem(identifier, placeData);
-                        findPlace(++i);
-                    } else {
-                        console.log('getDetails: ', identifier, status)
-                        setTimeout(function(){
-                            findPlace(i);
-                        }, 1000);
-                    }
-                });
-            }
+                        }
+                    });
+                    //- console.log(identifier, placeData);
+                    setPlaces(that, placeData);
+                    localStorage.setItem(identifier, placeData);
+                    findPlace(++i);
+                } else {
+                    console.log('getDetails: ', identifier, status)
+                    setTimeout(function(){
+                        findPlace(i);
+                    }, 1000);
+                }
+            });
         }
 
 
