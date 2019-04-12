@@ -298,8 +298,8 @@ block scripts
 
             var today = new Date().getDate();
             var localData = localStorage.getItem(identifier);
-            if(localData && today%4 != 0){
-                console.log(data.identifier, 'local', today, today%4 != 0);
+            if(localData && today%4 === 0){
+                console.log(data.identifier, 'local', today, today%4 === 0);
                 setPlaces(that, localData);
                 findPlace(++i);
             } else {
