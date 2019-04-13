@@ -4,6 +4,7 @@
     var map, geolocation, isLocated, myMarker, myAccuracy;
     var placeService, placeMarker, placesInfo = {};
     var $places, $placeInfo;
+    var mapStarted = false;
     var refreshTime = 86400000 * 2;
 
 
@@ -240,6 +241,12 @@
     //- Iniciar mapa y su configuración
     // eslint-disable-next-line no-unused-vars
     window.initMap = function() {
+        if(mapStarted){
+            return;
+        } else {
+            mapStarted = true;
+        }
+
         map = new google.maps.Map(document.getElementById('map'), {
             center: new google.maps.LatLng( 38.008700, -3.369500),
             disableDefaultUI: true,
@@ -300,7 +307,11 @@
         $placeInfo = $('#placeInfo');
         $placeInfo.find('.close').click(function(){
             $placeInfo.hide();
-        })
+        });
+        window.initMap();
+        // google.maps.event.addListener(map, 'idle', function() {
+        //     window.initMap();
+        // });
     });
 
 
