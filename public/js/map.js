@@ -192,7 +192,7 @@
 
 
     // eslint-disable-next-line no-unused-vars
-    function gps() {
+    window.gps = function() {
         if(geolocation) {
             navigator.geolocation.clearWatch(geolocation);
             if (myMarker) { myMarker.setMap(null); }
