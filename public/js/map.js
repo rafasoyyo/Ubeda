@@ -40,7 +40,7 @@
             element.children('.place-background').css({ 'background-image': 'url(/images/default.jpg)' });
         }
         element.click(function(){
-            console.log(element, element.data(), element.data(placeId));
+            // console.log(element, element.data(), element.data(placeId));
             placeFocus(element.data('placeid'));
         });
     }
@@ -308,10 +308,6 @@
         $placeInfo.find('.close').click(function(){
             $placeInfo.hide();
         });
-        window.initMap();
-        // google.maps.event.addListener(map, 'idle', function() {
-        //     window.initMap();
-        // });
     });
 
 
