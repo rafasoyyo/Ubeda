@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v1.0.0 - 15/04/2019
+# v1.0.1 - 14/04/2019
 
 CACHE:
 /images/canatapa.jpg
@@ -17,6 +17,8 @@ CACHE:
 /images/novios.jpg
 /images/nosotros.png
 /images/turisteo.jpeg
+
+/images/background.gif
 
 NETWORK:
 *
