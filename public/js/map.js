@@ -45,6 +45,12 @@ function setPlaces(element, place) {
 }
 
 
+function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+
 //- Buscar datos de lugares
 function findPlace(i) {
 
@@ -55,7 +61,7 @@ function findPlace(i) {
     var data = that.data();
     var identifier = data.identifier.replace(/[^a-zA-Z]/g, '');
     var localData = localStorage.getItem(identifier);
-    if(localData) {
+    if(localData && !getParameterByName('force')) {
         localData = JSON.parse(localData);
         if(localData.time) {
             var diffTime = new Date().getTime() - new Date(localData.time).getTime();
