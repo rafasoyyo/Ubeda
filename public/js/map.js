@@ -298,7 +298,7 @@ function initMap() {
 }
 
 
-$('document').ready(function() {
+$(document).ready(function() {
     $places = $('#places');
     var $place  = $places.find('.place');
     $places.find('.scroll-places').width( ($place.length * ($place.outerWidth() + 10) ) + 2 );

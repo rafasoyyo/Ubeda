@@ -17,16 +17,16 @@ var DeTapas = Lugares.DeTapas;
 
 var places = {
     LosLugares: {
-        title: "Lugares de la boda",
+        title: "Los lugares de la boda"
     },
     PaDormir: {
-        title: "Alojamientos",
+        title: "¿Dónde alojarse?"
     },
     DeTuristeo: {
-        title: "Turismo",
+        title: "¿Qué ver en Úbeda?"
     },
     DeTapas: {
-        title: "Tapeo y Compras",
+        title: "De tapeo y de compras"
     }
 }
 
