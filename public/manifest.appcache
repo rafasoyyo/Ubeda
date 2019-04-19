@@ -20,6 +20,8 @@ CACHE:
 
 /images/background.gif
 
+/js/map.js
+
 NETWORK:
 *
 
