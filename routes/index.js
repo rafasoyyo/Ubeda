@@ -166,7 +166,7 @@ router.get('/guests', function(req, res, next) {
             res.render('lista_invitados', {
                 title: 'Invitados',
                 now: new Date().toISOString(),
-                invitados: result,
+                invitados: ([]).concat(result),
                 env: env,
                 manifest: false
             });
